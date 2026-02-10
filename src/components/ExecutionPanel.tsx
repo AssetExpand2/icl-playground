@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
+import { useTheme } from '../hooks/useTheme';
 import {
   initWasm,
   isInitialized,
@@ -22,6 +23,7 @@ interface ExecutionPanelProps {
 }
 
 export function ExecutionPanel({ source }: ExecutionPanelProps) {
+  const { theme } = useTheme();
   const [inputJson, setInputJson] = useState('{\n  \n}');
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [running, setRunning] = useState(false);
@@ -139,7 +141,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
               language="json"
               value={inputJson}
               onChange={(v) => setInputJson(v ?? '{}')}
-              theme="vs-dark"
+              theme={theme === 'dark' ? 'vs-dark' : 'vs'}
               options={{
                 minimap: { enabled: false },
                 fontSize: 12,

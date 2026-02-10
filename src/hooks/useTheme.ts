@@ -1,18 +1,31 @@
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
+
+interface ThemeContextValue {
+  theme: Theme;
+  toggle: () => void;
+}
 
 const STORAGE_KEY = 'icl-playground-theme';
 
-/**
- * Hook for managing dark/light theme.
- * Persists preference in localStorage.
- */
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: 'dark',
+  toggle: () => {},
+});
+
+/** Use in any component to read the current theme and toggle it. */
 export function useTheme() {
+  return useContext(ThemeContext);
+}
+
+/** Use once at the root (App.tsx) to create the provider value. */
+export function useThemeProvider() {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark';
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === 'light' || stored === 'dark') return stored;
-    return 'dark'; // default
+    return 'dark';
   });
 
   useEffect(() => {
@@ -20,7 +33,9 @@ export function useTheme() {
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
-  const toggle = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  const toggle = useCallback(() => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   return { theme, toggle };
 }

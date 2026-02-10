@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useIcl } from './hooks/useIcl'
+import { useThemeProvider, ThemeContext } from './hooks/useTheme'
 import { IclEditor } from './components/Editor'
 import type { IclEditorHandle } from './components/Editor'
 import { Toolbar } from './components/Toolbar'
@@ -18,6 +19,7 @@ const DEFAULT_EXAMPLE = EXAMPLE_CONTRACTS[0]
 
 function App() {
   const { wasmReady, loading, result, init, run } = useIcl()
+  const themeCtx = useThemeProvider()
   const [source, setSource] = useState('')
   const [loadedSource, setLoadedSource] = useState('')
   const [activeAction, setActiveAction] = useState<PipelineAction | null>(null)
@@ -68,6 +70,7 @@ function App() {
   }, [])
 
   return (
+    <ThemeContext.Provider value={themeCtx}>
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
       {/* Header */}
       <header className="border-b border-gray-800 px-6 py-3 flex items-center justify-between">
@@ -78,6 +81,22 @@ function App() {
           <ExamplePicker dirty={dirty} onSelect={handleExampleSelect} />
         </div>
         <div className="flex items-center gap-3">
+          {/* Theme toggle */}
+          <button
+            onClick={themeCtx.toggle}
+            className="p-1.5 rounded text-gray-400 hover:text-gray-100 hover:bg-gray-800 transition-colors"
+            title={themeCtx.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {themeCtx.theme === 'dark' ? (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
           <span className={`inline-block w-2 h-2 rounded-full ${wasmReady ? 'bg-green-500' : 'bg-yellow-500 animate-pulse'}`} />
           <span className="text-xs text-gray-500">
             {wasmReady ? 'WASM Ready' : 'Loading WASM...'}
@@ -120,6 +139,7 @@ function App() {
         dirty={dirty}
       />
     </div>
+    </ThemeContext.Provider>
   )
 }
 

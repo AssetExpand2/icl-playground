@@ -79,7 +79,7 @@ export function Toolbar({ wasmReady, loading, activeAction, onAction }: ToolbarP
                 ${isActive
                   ? 'bg-blue-600 text-white'
                   : available
-                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-gray-50'
                     : 'bg-gray-800/50 text-gray-600 cursor-not-allowed'
                 }
                 ${disabled && !isActive ? 'opacity-60' : ''}

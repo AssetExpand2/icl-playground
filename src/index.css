@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+/*
+ * Theme: Gray-scale inversion strategy
+ *
+ * In light mode, we invert the gray scale so that existing dark-mode
+ * classes (bg-gray-950, text-gray-100, etc.) automatically produce
+ * appropriate light-mode colors without touching any component files.
+ *
+ * gray-950 (darkest in dark mode) → white (lightest in light mode)
+ * gray-100 (lightest text in dark mode) → near-black (darkest text in light mode)
+ */
+
+/* Light mode — inverted gray scale */
+:root {
+  --color-gray-950: #ffffff;
+  --color-gray-900: #f9fafb;
+  --color-gray-800: #f3f4f6;
+  --color-gray-700: #e5e7eb;
+  --color-gray-600: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-400: #4b5563;
+  --color-gray-300: #374151;
+  --color-gray-200: #1f2937;
+  --color-gray-100: #111827;
+  --color-gray-50: #030712;
+  color-scheme: light;
+}
+
+/* Dark mode — standard Tailwind gray scale (restored) */
+.dark {
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+  color-scheme: dark;
+}

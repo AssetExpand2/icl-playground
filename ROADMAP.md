@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 1 — In Progress
+**Status:** Phase 5 — In Progress
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -64,7 +64,7 @@
 - [x] "Errors" tab — shows parse/verify errors with line numbers
 - [x] "AST" tab — shows raw AST JSON (pretty-printed)
 - [x] Clicking an error jumps to the line in the editor
-- [ ] Commit and push
+- [x] Commit and push
 
 ---
 
@@ -76,7 +76,7 @@
 - [x] Load examples from `public/examples/` at build time
 - [x] Selecting an example replaces editor content
 - [x] Confirm dialog if editor has unsaved changes
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 2.2 — Status Bar
 
@@ -84,14 +84,14 @@
 - [x] Show `icl-runtime` version
 - [x] Show parse status (valid / error count)
 - [x] Show cursor position (line:column)
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 2.3 — Layout & Responsive Design
 
 - [x] Split-pane layout: editor left, output right
 - [x] Draggable divider between panes
 - [x] Responsive: stack vertically on mobile
-- [ ] Commit and push
+- [x] Commit and push
 
 ---
 
@@ -103,7 +103,7 @@
 - [x] Expand/collapse nodes
 - [x] Click a node to highlight corresponding source in editor
 - [x] Show node types with icons/colors
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 3.2 — Pipeline Visualization
 
@@ -112,7 +112,7 @@
 - [x] Each stage shows its output
 - [x] Step-through mode: click "Next" to advance one stage at a time
 - [x] Highlight current stage
-- [ ] Commit and push
+- [x] Commit and push
 
 ---
 
@@ -137,7 +137,7 @@
 - [x] "Execute" button — run contract with user-provided input JSON
 - [x] Input panel for execution parameters
 - [x] Show execution result, postcondition checks, provenance log
-- [ ] Commit and push
+- [x] Commit and push
 
 ---
 
@@ -145,10 +145,10 @@
 
 ### 5.1 — Theme & Appearance
 
-- [ ] Dark/light theme toggle
-- [ ] Persist theme preference in localStorage
-- [ ] Consistent color scheme matching ICL branding
-- [ ] Commit and push
+- [x] Dark/light theme toggle
+- [x] Persist theme preference in localStorage
+- [x] Consistent color scheme matching ICL branding
+- [x] Commit and push
 
 ### 5.2 — Shareable Links
 

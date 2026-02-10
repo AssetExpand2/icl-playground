@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
+import { useTheme } from '../hooks/useTheme';
 import {
   initWasm,
   isInitialized,
@@ -71,6 +72,7 @@ interface ContractDiffProps {
 }
 
 export function ContractDiff({ initialLeft }: ContractDiffProps) {
+  const { theme } = useTheme();
   const [leftSource, setLeftSource] = useState(initialLeft);
   const [rightSource, setRightSource] = useState('');
   const [diffLines, setDiffLines] = useState<DiffLine[] | null>(null);
@@ -164,7 +166,7 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
               language="icl"
               value={leftSource}
               onChange={(v) => setLeftSource(v ?? '')}
-              theme="icl-dark"
+              theme={theme === 'dark' ? 'icl-dark' : 'icl-light'}
               options={{
                 minimap: { enabled: false },
                 fontSize: 12,
@@ -188,7 +190,7 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
               language="icl"
               value={rightSource}
               onChange={(v) => setRightSource(v ?? '')}
-              theme="icl-dark"
+              theme={theme === 'dark' ? 'icl-dark' : 'icl-light'}
               options={{
                 minimap: { enabled: false },
                 fontSize: 12,

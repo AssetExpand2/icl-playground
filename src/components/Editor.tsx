@@ -1,6 +1,7 @@
 import { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import Editor, { type OnMount, type Monaco } from '@monaco-editor/react';
 import type * as MonacoEditor from 'monaco-editor';
+import { useTheme } from '../hooks/useTheme';
 
 // --- ICL Language Definition ---
 
@@ -139,6 +140,29 @@ function registerIclLanguage(monaco: Monaco) {
       'editor.foreground': '#D4D4D4',
     },
   });
+
+  // Light theme for ICL syntax
+  monaco.editor.defineTheme('icl-light', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: 'keyword.section', foreground: '8B008B', fontStyle: 'bold' },
+      { token: 'type', foreground: '008080' },
+      { token: 'variable.field', foreground: '0451A5' },
+      { token: 'string', foreground: 'A31515' },
+      { token: 'number', foreground: '098658' },
+      { token: 'number.float', foreground: '098658' },
+      { token: 'number.iso8601', foreground: '795E26' },
+      { token: 'number.uuid', foreground: '795E26' },
+      { token: 'keyword.boolean', foreground: '0000FF' },
+      { token: 'comment', foreground: '008000', fontStyle: 'italic' },
+      { token: 'delimiter', foreground: '333333' },
+    ],
+    colors: {
+      'editor.background': '#ffffff',
+      'editor.foreground': '#333333',
+    },
+  });
 }
 
 // --- Component ---
@@ -156,6 +180,8 @@ export interface IclEditorHandle {
 export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
   function IclEditor({ value, onChange, onCursorPositionChange }, ref) {
     const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null);
+    const monacoRef = useRef<Monaco | null>(null);
+    const { theme } = useTheme();
 
     useImperativeHandle(ref, () => ({
       goToLine(line: number, column = 1) {
@@ -169,8 +195,9 @@ export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
 
     const handleMount: OnMount = (editor, monaco) => {
       editorRef.current = editor;
+      monacoRef.current = monaco;
       registerIclLanguage(monaco);
-      monaco.editor.setTheme('icl-dark');
+      monaco.editor.setTheme(theme === 'dark' ? 'icl-dark' : 'icl-light');
 
       // Track cursor position
       editor.onDidChangeCursorPosition((e) => {
@@ -182,6 +209,13 @@ export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
 
       editor.focus();
     };
+
+    // Switch Monaco theme when app theme changes
+    useEffect(() => {
+      if (monacoRef.current) {
+        monacoRef.current.editor.setTheme(theme === 'dark' ? 'icl-dark' : 'icl-light');
+      }
+    }, [theme]);
 
     // Keep editor sized properly when container resizes
     useEffect(() => {
