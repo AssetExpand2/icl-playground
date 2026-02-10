@@ -80,10 +80,10 @@
 
 ### 2.2 — Status Bar
 
-- [ ] Create `StatusBar.tsx` — bottom bar
-- [ ] Show `icl-runtime` version
-- [ ] Show parse status (valid / error count)
-- [ ] Show cursor position (line:column)
+- [x] Create `StatusBar.tsx` — bottom bar
+- [x] Show `icl-runtime` version
+- [x] Show parse status (valid / error count)
+- [x] Show cursor position (line:column)
 - [ ] Commit and push
 
 ### 2.3 — Layout & Responsive Design

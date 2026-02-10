@@ -146,6 +146,7 @@ function registerIclLanguage(monaco: Monaco) {
 interface IclEditorProps {
   value: string;
   onChange: (value: string) => void;
+  onCursorPositionChange?: (position: { line: number; column: number }) => void;
 }
 
 export interface IclEditorHandle {
@@ -153,7 +154,7 @@ export interface IclEditorHandle {
 }
 
 export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
-  function IclEditor({ value, onChange }, ref) {
+  function IclEditor({ value, onChange, onCursorPositionChange }, ref) {
     const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null);
 
     useImperativeHandle(ref, () => ({
@@ -170,6 +171,15 @@ export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
       editorRef.current = editor;
       registerIclLanguage(monaco);
       monaco.editor.setTheme('icl-dark');
+
+      // Track cursor position
+      editor.onDidChangeCursorPosition((e) => {
+        onCursorPositionChange?.({
+          line: e.position.lineNumber,
+          column: e.position.column,
+        });
+      });
+
       editor.focus();
     };
 

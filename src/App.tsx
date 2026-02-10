@@ -5,9 +5,13 @@ import type { IclEditorHandle } from './components/Editor'
 import { Toolbar } from './components/Toolbar'
 import { OutputPanel } from './components/OutputPanel'
 import { ExamplePicker } from './components/ExamplePicker'
+import { StatusBar } from './components/StatusBar'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
+
+// Read icl-runtime version at build time
+const ICL_RUNTIME_VERSION = '0.1.2'
 
 const DEFAULT_EXAMPLE = EXAMPLE_CONTRACTS[0]
 
@@ -16,9 +20,19 @@ function App() {
   const [source, setSource] = useState('')
   const [loadedSource, setLoadedSource] = useState('')
   const [activeAction, setActiveAction] = useState<PipelineAction | null>(null)
+  const [cursorPosition, setCursorPosition] = useState({ line: 1, column: 1 })
   const editorRef = useRef<IclEditorHandle>(null)
 
   const dirty = source !== loadedSource && source.trim() !== ''
+
+  // Derive parse status from last result
+  const parseStatus: 'idle' | 'valid' | 'error' = !result
+    ? 'idle'
+    : result.success
+      ? 'valid'
+      : 'error'
+
+  const errorCount = result && !result.success ? 1 : 0
 
   // Initialize WASM + load default example
   useEffect(() => {
@@ -82,7 +96,12 @@ function App() {
       <main className="flex-1 flex min-h-0">
         {/* Editor pane */}
         <div className="flex-1 min-w-0">
-          <IclEditor ref={editorRef} value={source} onChange={setSource} />
+          <IclEditor
+            ref={editorRef}
+            value={source}
+            onChange={setSource}
+            onCursorPositionChange={setCursorPosition}
+          />
         </div>
 
         {/* Output pane */}
@@ -91,18 +110,14 @@ function App() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-800 px-6 py-2 text-xs text-gray-600 flex justify-between">
-        <span>v0.1.0</span>
-        <a
-          href="https://github.com/ICL-System/ICL-Spec"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-gray-400 transition-colors"
-        >
-          ICL Specification
-        </a>
-      </footer>
+      {/* Status Bar */}
+      <StatusBar
+        cursorPosition={cursorPosition}
+        parseStatus={parseStatus}
+        errorCount={errorCount}
+        runtimeVersion={ICL_RUNTIME_VERSION}
+        dirty={dirty}
+      />
     </div>
   )
 }
