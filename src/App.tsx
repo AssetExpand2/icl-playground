@@ -104,7 +104,7 @@ function App() {
           />
         }
         right={
-          <OutputPanel result={result} onGoToLine={handleGoToLine} />
+          <OutputPanel result={result} source={source} onGoToLine={handleGoToLine} />
         }
         defaultRightWidth={400}
         minRightWidth={200}

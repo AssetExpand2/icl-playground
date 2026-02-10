@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react';
 import type { IclResult } from '../icl/types';
 import { AstViewer } from './AstViewer';
+import { PipelineView } from './PipelineView';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast' | 'ast-tree';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline';
 
 interface TabDef {
   id: TabId;
@@ -16,6 +17,7 @@ const TABS: TabDef[] = [
   { id: 'errors', label: 'Errors' },
   { id: 'ast-tree', label: 'AST Tree' },
   { id: 'ast', label: 'AST JSON' },
+  { id: 'pipeline', label: 'Pipeline' },
 ];
 
 // --- Error Parsing ---
@@ -76,10 +78,11 @@ function tryParseAst(result: IclResult): string | null {
 
 interface OutputPanelProps {
   result: IclResult | null;
+  source: string;
   onGoToLine?: (line: number, column?: number) => void;
 }
 
-export function OutputPanel({ result, onGoToLine }: OutputPanelProps) {
+export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
   const [activeTab, setActiveTab] = useState<TabId>('result');
 
   const errors = result ? parseErrors(result) : [];
@@ -129,7 +132,9 @@ export function OutputPanel({ result, onGoToLine }: OutputPanelProps) {
 
       {/* Tab content */}
       <div className="flex-1 overflow-auto p-4">
-        {!result ? (
+        {activeTab === 'pipeline' ? (
+          <PipelineView source={source} />
+        ) : !result ? (
           <EmptyState />
         ) : activeTab === 'result' ? (
           <ResultTab result={result} />

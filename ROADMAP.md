@@ -107,11 +107,11 @@
 
 ### 3.2 — Pipeline Visualization
 
-- [ ] Create `PipelineView.tsx` — shows the ICL pipeline stages
-- [ ] Visual: Source → Parse → Normalize → Verify → Execute
-- [ ] Each stage shows its output
-- [ ] Step-through mode: click "Next" to advance one stage at a time
-- [ ] Highlight current stage
+- [x] Create `PipelineView.tsx` — shows the ICL pipeline stages
+- [x] Visual: Source → Parse → Normalize → Verify → Execute
+- [x] Each stage shows its output
+- [x] Step-through mode: click "Next" to advance one stage at a time
+- [x] Highlight current stage
 - [ ] Commit and push
 
 ---
