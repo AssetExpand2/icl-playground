@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 0 — In Progress
+**Status:** Phase 0 Complete ✅ — Phase 1 next
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -22,14 +22,14 @@
 
 ### 0.2 — Project Structure
 
-- [ ] Create `src/components/` directory
-- [ ] Create `src/icl/` directory
-- [ ] Create `src/hooks/` directory
-- [ ] Create `public/examples/` with 3 example `.icl` contracts (copy from ICL-Spec)
-- [ ] Set up `src/icl/runtime.ts` — import and wrap `icl-runtime` npm package
-- [ ] Set up `src/icl/types.ts` — TypeScript types for ICL AST
-- [ ] Verify `icl-runtime` loads correctly in the browser (WASM initializes)
-- [ ] Commit and push
+- [x] Create `src/components/` directory
+- [x] Create `src/icl/` directory
+- [x] Create `src/hooks/` directory
+- [x] Create `public/examples/` with 3 example `.icl` contracts (copy from ICL-Spec)
+- [x] Set up `src/icl/runtime.ts` — import and wrap `icl-runtime` npm package
+- [x] Set up `src/icl/types.ts` — TypeScript types for ICL AST
+- [x] Verify `icl-runtime` loads correctly in the browser (WASM initializes)
+- [x] Commit and push
 
 ---
 
