@@ -130,13 +130,13 @@
 - [x] Side-by-side editor: two contracts
 - [x] "Diff" button — normalize both, show semantic diff
 - [x] Highlight additions/removals
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 4.3 — Execution
 
-- [ ] "Execute" button — run contract with user-provided input JSON
-- [ ] Input panel for execution parameters
-- [ ] Show execution result, postcondition checks, provenance log
+- [x] "Execute" button — run contract with user-provided input JSON
+- [x] Input panel for execution parameters
+- [x] Show execution result, postcondition checks, provenance log
 - [ ] Commit and push
 
 ---

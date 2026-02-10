@@ -4,10 +4,11 @@ import { AstViewer } from './AstViewer';
 import { PipelineView } from './PipelineView';
 import { DeterminismCheck } from './DeterminismCheck';
 import { ContractDiff } from './ContractDiff';
+import { ExecutionPanel } from './ExecutionPanel';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute';
 
 interface TabDef {
   id: TabId;
@@ -22,6 +23,7 @@ const TABS: TabDef[] = [
   { id: 'pipeline', label: 'Pipeline' },
   { id: 'determinism', label: 'Determinism' },
   { id: 'diff', label: 'Diff' },
+  { id: 'execute', label: 'Execute' },
 ];
 
 // --- Error Parsing ---
@@ -135,7 +137,11 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
       </div>
 
       {/* Tab content */}
-      {activeTab === 'diff' ? (
+      {activeTab === 'execute' ? (
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <ExecutionPanel source={source} />
+        </div>
+      ) : activeTab === 'diff' ? (
         <div className="flex-1 min-h-0 overflow-hidden">
           <ContractDiff initialLeft={source} />
         </div>
