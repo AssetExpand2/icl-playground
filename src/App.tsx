@@ -1,7 +1,9 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useIcl } from './hooks/useIcl'
 import { IclEditor } from './components/Editor'
+import type { IclEditorHandle } from './components/Editor'
 import { Toolbar } from './components/Toolbar'
+import { OutputPanel } from './components/OutputPanel'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
@@ -12,6 +14,7 @@ function App() {
   const { wasmReady, loading, result, init, run } = useIcl()
   const [source, setSource] = useState('')
   const [activeAction, setActiveAction] = useState<PipelineAction | null>(null)
+  const editorRef = useRef<IclEditorHandle>(null)
 
   // Initialize WASM + load default example
   useEffect(() => {
@@ -30,6 +33,11 @@ function App() {
     },
     [run, source],
   )
+
+  // Handle click-to-jump from error panel
+  const handleGoToLine = useCallback((line: number, column?: number) => {
+    editorRef.current?.goToLine(line, column)
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
@@ -54,41 +62,16 @@ function App() {
         onAction={handleAction}
       />
 
-      {/* Main: Editor (left) + Output placeholder (right) */}
+      {/* Main: Editor (left) + Output (right) */}
       <main className="flex-1 flex min-h-0">
         {/* Editor pane */}
         <div className="flex-1 min-w-0">
-          <IclEditor value={source} onChange={setSource} />
+          <IclEditor ref={editorRef} value={source} onChange={setSource} />
         </div>
 
-        {/* Output pane — placeholder for Phase 1.3 */}
-        <div className="w-[400px] border-l border-gray-800 bg-gray-900 p-4 overflow-auto">
-          {result ? (
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className={`inline-block w-2 h-2 rounded-full ${result.success ? 'bg-green-500' : 'bg-red-500'}`} />
-                <span className="text-sm font-medium text-gray-300">
-                  {result.action.charAt(0).toUpperCase() + result.action.slice(1)}
-                </span>
-                <span className="text-xs text-gray-600 ml-auto">
-                  {result.durationMs.toFixed(1)}ms
-                </span>
-              </div>
-              {result.error ? (
-                <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3">
-                  {result.error}
-                </pre>
-              ) : (
-                <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3 max-h-[calc(100vh-200px)] overflow-auto">
-                  {result.output}
-                </pre>
-              )}
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500">
-              Click a toolbar button to run an ICL operation
-            </p>
-          )}
+        {/* Output pane */}
+        <div className="w-[400px] border-l border-gray-800 bg-gray-900">
+          <OutputPanel result={result} onGoToLine={handleGoToLine} />
         </div>
       </main>
 

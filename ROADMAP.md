@@ -55,15 +55,15 @@
 - [x] "Format" button — calls fmt and replaces editor content
 - [x] Buttons show loading state while WASM runs
 - [x] Disable buttons for functions not yet available in `icl-runtime`
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 1.3 — Output Panel
 
-- [ ] Create `OutputPanel.tsx` — tabbed output area
-- [ ] "Result" tab — shows normalized output, hash, etc.
-- [ ] "Errors" tab — shows parse/verify errors with line numbers
-- [ ] "AST" tab — shows raw AST JSON (pretty-printed)
-- [ ] Clicking an error jumps to the line in the editor
+- [x] Create `OutputPanel.tsx` — tabbed output area
+- [x] "Result" tab — shows normalized output, hash, etc.
+- [x] "Errors" tab — shows parse/verify errors with line numbers
+- [x] "AST" tab — shows raw AST JSON (pretty-printed)
+- [x] Clicking an error jumps to the line in the editor
 - [ ] Commit and push
 
 ---

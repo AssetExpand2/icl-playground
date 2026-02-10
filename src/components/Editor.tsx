@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import Editor, { type OnMount, type Monaco } from '@monaco-editor/react';
 import type * as MonacoEditor from 'monaco-editor';
 
@@ -148,45 +148,61 @@ interface IclEditorProps {
   onChange: (value: string) => void;
 }
 
-export function IclEditor({ value, onChange }: IclEditorProps) {
-  const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null);
-
-  const handleMount: OnMount = (editor, monaco) => {
-    editorRef.current = editor;
-    registerIclLanguage(monaco);
-    monaco.editor.setTheme('icl-dark');
-    editor.focus();
-  };
-
-  // Keep editor sized properly when container resizes
-  useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      editorRef.current?.layout();
-    });
-    const container = editorRef.current?.getContainerDomNode();
-    if (container) {
-      observer.observe(container.parentElement!);
-    }
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <Editor
-      language={ICL_LANGUAGE_ID}
-      value={value}
-      onChange={(v) => onChange(v ?? '')}
-      onMount={handleMount}
-      options={{
-        minimap: { enabled: false },
-        fontSize: 14,
-        lineNumbers: 'on',
-        scrollBeyondLastLine: false,
-        wordWrap: 'on',
-        tabSize: 2,
-        automaticLayout: true,
-        bracketPairColorization: { enabled: true },
-        padding: { top: 12 },
-      }}
-    />
-  );
+export interface IclEditorHandle {
+  goToLine: (line: number, column?: number) => void;
 }
+
+export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
+  function IclEditor({ value, onChange }, ref) {
+    const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null);
+
+    useImperativeHandle(ref, () => ({
+      goToLine(line: number, column = 1) {
+        const editor = editorRef.current;
+        if (!editor) return;
+        editor.revealLineInCenter(line);
+        editor.setPosition({ lineNumber: line, column });
+        editor.focus();
+      },
+    }));
+
+    const handleMount: OnMount = (editor, monaco) => {
+      editorRef.current = editor;
+      registerIclLanguage(monaco);
+      monaco.editor.setTheme('icl-dark');
+      editor.focus();
+    };
+
+    // Keep editor sized properly when container resizes
+    useEffect(() => {
+      const observer = new ResizeObserver(() => {
+        editorRef.current?.layout();
+      });
+      const container = editorRef.current?.getContainerDomNode();
+      if (container) {
+        observer.observe(container.parentElement!);
+      }
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <Editor
+        language={ICL_LANGUAGE_ID}
+        value={value}
+        onChange={(v) => onChange(v ?? '')}
+        onMount={handleMount}
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          lineNumbers: 'on',
+          scrollBeyondLastLine: false,
+          wordWrap: 'on',
+          tabSize: 2,
+          automaticLayout: true,
+          bracketPairColorization: { enabled: true },
+          padding: { top: 12 },
+        }}
+      />
+    );
+  },
+);
