@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 0 Complete ✅ — Phase 1 next
+**Status:** Phase 1 — In Progress
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -37,13 +37,13 @@
 
 ### 1.1 — Monaco Editor Integration
 
-- [ ] Create `Editor.tsx` — Monaco editor component
-- [ ] Configure Monaco for a custom ICL language (basic keyword highlighting)
-- [ ] ICL keywords: `Contract`, `Identity`, `PurposeStatement`, `DataSemantics`, `BehavioralSemantics`, `ExecutionConstraints`, `HumanMachineContract`, `Extensions`
-- [ ] ICL types: `Integer`, `Float`, `String`, `Boolean`, `ISO8601`, `UUID`, `Array`, `Map`, `Enum`, `Object`
-- [ ] Editor fills available space, resizable
-- [ ] Load default example contract on startup
-- [ ] Commit and push
+- [x] Create `Editor.tsx` — Monaco editor component
+- [x] Configure Monaco for a custom ICL language (basic keyword highlighting)
+- [x] ICL keywords: `Contract`, `Identity`, `PurposeStatement`, `DataSemantics`, `BehavioralSemantics`, `ExecutionConstraints`, `HumanMachineContract`, `Extensions`
+- [x] ICL types: `Integer`, `Float`, `String`, `Boolean`, `ISO8601`, `UUID`, `Array`, `Map`, `Enum`, `Object`
+- [x] Editor fills available space, resizable
+- [x] Load default example contract on startup
+- [x] Commit and push
 
 ### 1.2 — Toolbar Actions
 

@@ -1,0 +1,192 @@
+import { useRef, useEffect } from 'react';
+import Editor, { type OnMount, type Monaco } from '@monaco-editor/react';
+import type * as MonacoEditor from 'monaco-editor';
+
+// --- ICL Language Definition ---
+
+const ICL_LANGUAGE_ID = 'icl';
+
+const ICL_KEYWORDS = [
+  'Contract',
+  'Identity',
+  'PurposeStatement',
+  'DataSemantics',
+  'BehavioralSemantics',
+  'ExecutionConstraints',
+  'HumanMachineContract',
+  'Extensions',
+];
+
+const ICL_TYPES = [
+  'Integer',
+  'Float',
+  'String',
+  'Boolean',
+  'ISO8601',
+  'UUID',
+  'Array',
+  'Map',
+  'Enum',
+  'Object',
+];
+
+const ICL_FIELDS = [
+  'stable_id',
+  'version',
+  'created_timestamp',
+  'owner',
+  'semantic_hash',
+  'narrative',
+  'intent_source',
+  'confidence_level',
+  'state',
+  'invariants',
+  'operations',
+  'name',
+  'precondition',
+  'parameters',
+  'postcondition',
+  'side_effects',
+  'idempotence',
+  'trigger_types',
+  'resource_limits',
+  'max_memory_bytes',
+  'computation_timeout_ms',
+  'max_state_size_bytes',
+  'external_permissions',
+  'sandbox_mode',
+  'system_commitments',
+  'system_refusals',
+  'user_obligations',
+];
+
+function registerIclLanguage(monaco: Monaco) {
+  // Register language if not already registered
+  if (monaco.languages.getLanguages().some((l: { id: string }) => l.id === ICL_LANGUAGE_ID)) {
+    return;
+  }
+
+  monaco.languages.register({ id: ICL_LANGUAGE_ID });
+
+  monaco.languages.setMonarchTokensProvider(ICL_LANGUAGE_ID, {
+    keywords: ICL_KEYWORDS,
+    typeKeywords: ICL_TYPES,
+    fields: ICL_FIELDS,
+
+    tokenizer: {
+      root: [
+        // Comments
+        [/\/\/.*$/, 'comment'],
+
+        // Strings
+        [/"[^"]*"/, 'string'],
+
+        // ISO8601 timestamps (before numbers to avoid partial match)
+        [/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/, 'number.iso8601'],
+
+        // UUIDs
+        [/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/, 'number.uuid'],
+
+        // Numbers (float and integer)
+        [/\d+\.\d+/, 'number.float'],
+        [/\d+/, 'number'],
+
+        // Boolean
+        [/\b(true|false)\b/, 'keyword.boolean'],
+
+        // Identifiers — check against keyword lists
+        [
+          /[a-zA-Z_]\w*/,
+          {
+            cases: {
+              '@keywords': 'keyword.section',
+              '@typeKeywords': 'type',
+              '@fields': 'variable.field',
+              '@default': 'identifier',
+            },
+          },
+        ],
+
+        // Brackets and delimiters
+        [/[{}[\]()]/, '@brackets'],
+        [/[,:]/, 'delimiter'],
+
+        // Whitespace
+        [/\s+/, 'white'],
+      ],
+    },
+  });
+
+  // Define theme colors for ICL tokens
+  monaco.editor.defineTheme('icl-dark', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword.section', foreground: 'C586C0', fontStyle: 'bold' },
+      { token: 'type', foreground: '4EC9B0' },
+      { token: 'variable.field', foreground: '9CDCFE' },
+      { token: 'string', foreground: 'CE9178' },
+      { token: 'number', foreground: 'B5CEA8' },
+      { token: 'number.float', foreground: 'B5CEA8' },
+      { token: 'number.iso8601', foreground: 'DCDCAA' },
+      { token: 'number.uuid', foreground: 'DCDCAA' },
+      { token: 'keyword.boolean', foreground: '569CD6' },
+      { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
+      { token: 'delimiter', foreground: 'D4D4D4' },
+    ],
+    colors: {
+      'editor.background': '#0a0a0f',
+      'editor.foreground': '#D4D4D4',
+    },
+  });
+}
+
+// --- Component ---
+
+interface IclEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function IclEditor({ value, onChange }: IclEditorProps) {
+  const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null);
+
+  const handleMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
+    registerIclLanguage(monaco);
+    monaco.editor.setTheme('icl-dark');
+    editor.focus();
+  };
+
+  // Keep editor sized properly when container resizes
+  useEffect(() => {
+    const observer = new ResizeObserver(() => {
+      editorRef.current?.layout();
+    });
+    const container = editorRef.current?.getContainerDomNode();
+    if (container) {
+      observer.observe(container.parentElement!);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <Editor
+      language={ICL_LANGUAGE_ID}
+      value={value}
+      onChange={(v) => onChange(v ?? '')}
+      onMount={handleMount}
+      options={{
+        minimap: { enabled: false },
+        fontSize: 14,
+        lineNumbers: 'on',
+        scrollBeyondLastLine: false,
+        wordWrap: 'on',
+        tabSize: 2,
+        automaticLayout: true,
+        bracketPairColorization: { enabled: true },
+        padding: { top: 12 },
+      }}
+    />
+  );
+}

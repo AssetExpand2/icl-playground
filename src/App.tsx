@@ -1,12 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useIcl } from './hooks/useIcl'
+import { IclEditor } from './components/Editor'
+import { EXAMPLE_CONTRACTS } from './icl/types'
 import './App.css'
+
+const DEFAULT_EXAMPLE = EXAMPLE_CONTRACTS[0]
 
 function App() {
   const { wasmReady, init } = useIcl()
+  const [source, setSource] = useState('')
 
+  // Initialize WASM + load default example
   useEffect(() => {
     init()
+    fetch(`${import.meta.env.BASE_URL}examples/${DEFAULT_EXAMPLE.filename}`)
+      .then((r) => r.text())
+      .then(setSource)
+      .catch(() => setSource('// Failed to load example'))
   }, [init])
 
   return (
@@ -24,20 +34,16 @@ function App() {
         </div>
       </header>
 
-      {/* Main content area — placeholder for editor + output */}
-      <main className="flex-1 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <p className="text-2xl font-semibold text-gray-300">
-            ICL Playground
-          </p>
-          <p className="text-gray-500">
-            Write, parse, and test ICL contracts in the browser.
-          </p>
-          <p className="text-sm text-gray-600">
-            {wasmReady
-              ? 'icl-runtime loaded — Editor coming in Phase 1.'
-              : 'Initializing icl-runtime WASM module...'}
-          </p>
+      {/* Main: Editor (left) + Output placeholder (right) */}
+      <main className="flex-1 flex min-h-0">
+        {/* Editor pane */}
+        <div className="flex-1 min-w-0">
+          <IclEditor value={source} onChange={setSource} />
+        </div>
+
+        {/* Output pane — placeholder for Phase 1.3 */}
+        <div className="w-[400px] border-l border-gray-800 bg-gray-900 p-4 overflow-auto">
+          <p className="text-sm text-gray-500">Output panel coming in Phase 1.3</p>
         </div>
       </main>
 

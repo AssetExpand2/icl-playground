@@ -14,14 +14,22 @@ Rigid workflow for executing any ROADMAP.md phase. Follow exactly.
 3. Read existing code that the phase builds on
 4. Present a brief plan to the user — what will be built, in how many batches
 
+## Directory Rule (CRITICAL)
+
+**Every terminal command MUST be prefixed with `cd /home/opeworld/Documents/RobustBrains/icl-playground &&`.**
+Background terminals start at the workspace root (`/home/opeworld/Documents/RobustBrains/`), NOT in the project directory. Running bare `npm run dev` or `npm run build` will fail with ENOENT.
+
+Correct: `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run build 2>&1`
+Wrong: `npm run build 2>&1`
+
 ## Implementation Loop
 
 For each batch:
 
 1. **Announce** — Tell user what this batch covers
 2. **Implement** — Write the code
-3. **Build** — `npm run build` (must pass — no TypeScript errors)
-4. **Dev check** — `npm run dev` starts without errors
+3. **Build** — `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run build` (must pass — no TypeScript errors)
+4. **Dev check** — `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run dev` starts without errors
 5. **Report** — Show results, ask user to type "continue" for next batch
 
 ## After All Batches Complete
