@@ -123,13 +123,13 @@
 - [x] "Determinism Check" button — parse same contract N times, compare hashes
 - [x] Show result: all identical = green, any mismatch = red (should never happen)
 - [x] Display iteration count and time taken
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 4.2 — Contract Diff
 
-- [ ] Side-by-side editor: two contracts
-- [ ] "Diff" button — normalize both, show semantic diff
-- [ ] Highlight additions/removals
+- [x] Side-by-side editor: two contracts
+- [x] "Diff" button — normalize both, show semantic diff
+- [x] Highlight additions/removals
 - [ ] Commit and push
 
 ### 4.3 — Execution

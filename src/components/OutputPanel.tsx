@@ -3,10 +3,11 @@ import type { IclResult } from '../icl/types';
 import { AstViewer } from './AstViewer';
 import { PipelineView } from './PipelineView';
 import { DeterminismCheck } from './DeterminismCheck';
+import { ContractDiff } from './ContractDiff';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff';
 
 interface TabDef {
   id: TabId;
@@ -20,6 +21,7 @@ const TABS: TabDef[] = [
   { id: 'ast', label: 'AST JSON' },
   { id: 'pipeline', label: 'Pipeline' },
   { id: 'determinism', label: 'Determinism' },
+  { id: 'diff', label: 'Diff' },
 ];
 
 // --- Error Parsing ---
@@ -133,6 +135,11 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
       </div>
 
       {/* Tab content */}
+      {activeTab === 'diff' ? (
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <ContractDiff initialLeft={source} />
+        </div>
+      ) : (
       <div className="flex-1 overflow-auto p-4">
         {activeTab === 'determinism' ? (
           <DeterminismCheck source={source} />
@@ -150,6 +157,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
           <AstTab result={result} />
         )}
       </div>
+      )}
     </div>
   );
 }
