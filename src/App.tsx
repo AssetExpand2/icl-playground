@@ -4,6 +4,7 @@ import { IclEditor } from './components/Editor'
 import type { IclEditorHandle } from './components/Editor'
 import { Toolbar } from './components/Toolbar'
 import { OutputPanel } from './components/OutputPanel'
+import { ExamplePicker } from './components/ExamplePicker'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
@@ -13,15 +14,21 @@ const DEFAULT_EXAMPLE = EXAMPLE_CONTRACTS[0]
 function App() {
   const { wasmReady, loading, result, init, run } = useIcl()
   const [source, setSource] = useState('')
+  const [loadedSource, setLoadedSource] = useState('')
   const [activeAction, setActiveAction] = useState<PipelineAction | null>(null)
   const editorRef = useRef<IclEditorHandle>(null)
+
+  const dirty = source !== loadedSource && source.trim() !== ''
 
   // Initialize WASM + load default example
   useEffect(() => {
     init()
     fetch(`${import.meta.env.BASE_URL}examples/${DEFAULT_EXAMPLE.filename}`)
       .then((r) => r.text())
-      .then(setSource)
+      .then((text) => {
+        setSource(text)
+        setLoadedSource(text)
+      })
       .catch(() => setSource('// Failed to load example'))
   }, [init])
 
@@ -34,6 +41,12 @@ function App() {
     [run, source],
   )
 
+  // Handle example selection
+  const handleExampleSelect = useCallback((text: string) => {
+    setSource(text)
+    setLoadedSource(text)
+  }, [])
+
   // Handle click-to-jump from error panel
   const handleGoToLine = useCallback((line: number, column?: number) => {
     editorRef.current?.goToLine(line, column)
@@ -43,9 +56,12 @@ function App() {
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
       {/* Header */}
       <header className="border-b border-gray-800 px-6 py-3 flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">
-          ICL Playground
-        </h1>
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl font-bold tracking-tight">
+            ICL Playground
+          </h1>
+          <ExamplePicker dirty={dirty} onSelect={handleExampleSelect} />
+        </div>
         <div className="flex items-center gap-3">
           <span className={`inline-block w-2 h-2 rounded-full ${wasmReady ? 'bg-green-500' : 'bg-yellow-500 animate-pulse'}`} />
           <span className="text-xs text-gray-500">

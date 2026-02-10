@@ -72,10 +72,10 @@
 
 ### 2.1 — Example Picker
 
-- [ ] Create `ExamplePicker.tsx` — dropdown to select example contracts
-- [ ] Load examples from `public/examples/` at build time
-- [ ] Selecting an example replaces editor content
-- [ ] Confirm dialog if editor has unsaved changes
+- [x] Create `ExamplePicker.tsx` — dropdown to select example contracts
+- [x] Load examples from `public/examples/` at build time
+- [x] Selecting an example replaces editor content
+- [x] Confirm dialog if editor has unsaved changes
 - [ ] Commit and push
 
 ### 2.2 — Status Bar
