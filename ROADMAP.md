@@ -120,9 +120,9 @@
 
 ### 4.1 — Determinism Check
 
-- [ ] "Determinism Check" button — parse same contract N times, compare hashes
-- [ ] Show result: all identical = green, any mismatch = red (should never happen)
-- [ ] Display iteration count and time taken
+- [x] "Determinism Check" button — parse same contract N times, compare hashes
+- [x] Show result: all identical = green, any mismatch = red (should never happen)
+- [x] Display iteration count and time taken
 - [ ] Commit and push
 
 ### 4.2 — Contract Diff

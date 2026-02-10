@@ -2,10 +2,11 @@ import { useState, useCallback } from 'react';
 import type { IclResult } from '../icl/types';
 import { AstViewer } from './AstViewer';
 import { PipelineView } from './PipelineView';
+import { DeterminismCheck } from './DeterminismCheck';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism';
 
 interface TabDef {
   id: TabId;
@@ -18,6 +19,7 @@ const TABS: TabDef[] = [
   { id: 'ast-tree', label: 'AST Tree' },
   { id: 'ast', label: 'AST JSON' },
   { id: 'pipeline', label: 'Pipeline' },
+  { id: 'determinism', label: 'Determinism' },
 ];
 
 // --- Error Parsing ---
@@ -132,7 +134,9 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
 
       {/* Tab content */}
       <div className="flex-1 overflow-auto p-4">
-        {activeTab === 'pipeline' ? (
+        {activeTab === 'determinism' ? (
+          <DeterminismCheck source={source} />
+        ) : activeTab === 'pipeline' ? (
           <PipelineView source={source} />
         ) : !result ? (
           <EmptyState />
