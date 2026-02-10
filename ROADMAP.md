@@ -99,10 +99,10 @@
 
 ### 3.1 — AST Tree View
 
-- [ ] Create `AstViewer.tsx` — interactive tree view of AST
-- [ ] Expand/collapse nodes
-- [ ] Click a node to highlight corresponding source in editor
-- [ ] Show node types with icons/colors
+- [x] Create `AstViewer.tsx` — interactive tree view of AST
+- [x] Expand/collapse nodes
+- [x] Click a node to highlight corresponding source in editor
+- [x] Show node types with icons/colors
 - [ ] Commit and push
 
 ### 3.2 — Pipeline Visualization

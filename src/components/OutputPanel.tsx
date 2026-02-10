@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
 import type { IclResult } from '../icl/types';
+import { AstViewer } from './AstViewer';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast';
+type TabId = 'result' | 'errors' | 'ast' | 'ast-tree';
 
 interface TabDef {
   id: TabId;
@@ -13,7 +14,8 @@ interface TabDef {
 const TABS: TabDef[] = [
   { id: 'result', label: 'Result' },
   { id: 'errors', label: 'Errors' },
-  { id: 'ast', label: 'AST' },
+  { id: 'ast-tree', label: 'AST Tree' },
+  { id: 'ast', label: 'AST JSON' },
 ];
 
 // --- Error Parsing ---
@@ -133,6 +135,8 @@ export function OutputPanel({ result, onGoToLine }: OutputPanelProps) {
           <ResultTab result={result} />
         ) : activeTab === 'errors' ? (
           <ErrorsTab errors={errors} onErrorClick={handleErrorClick} />
+        ) : activeTab === 'ast-tree' ? (
+          <AstTreeTab result={result} onGoToLine={onGoToLine} />
         ) : (
           <AstTab result={result} />
         )}
@@ -228,6 +232,17 @@ function ErrorsTab({
       ))}
     </div>
   );
+}
+
+function AstTreeTab({
+  result,
+  onGoToLine,
+}: {
+  result: IclResult;
+  onGoToLine?: (line: number, column?: number) => void;
+}) {
+  const astJson = result.action === 'parse' && result.success ? result.output : null;
+  return <AstViewer astJson={astJson} onNodeClick={onGoToLine} />;
 }
 
 function AstTab({ result }: { result: IclResult }) {
