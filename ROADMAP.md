@@ -47,14 +47,14 @@
 
 ### 1.2 — Toolbar Actions
 
-- [ ] Create `Toolbar.tsx` with action buttons
-- [ ] "Parse" button — calls `icl-runtime` parse function
-- [ ] "Normalize" button — calls normalize function
-- [ ] "Verify" button — calls verify function
-- [ ] "Hash" button — calls hash function
-- [ ] "Format" button — calls fmt and replaces editor content
-- [ ] Buttons show loading state while WASM runs
-- [ ] Disable buttons for functions not yet available in `icl-runtime`
+- [x] Create `Toolbar.tsx` with action buttons
+- [x] "Parse" button — calls `icl-runtime` parse function
+- [x] "Normalize" button — calls normalize function
+- [x] "Verify" button — calls verify function
+- [x] "Hash" button — calls hash function
+- [x] "Format" button — calls fmt and replaces editor content
+- [x] Buttons show loading state while WASM runs
+- [x] Disable buttons for functions not yet available in `icl-runtime`
 - [ ] Commit and push
 
 ### 1.3 — Output Panel
