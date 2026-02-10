@@ -88,9 +88,9 @@
 
 ### 2.3 — Layout & Responsive Design
 
-- [ ] Split-pane layout: editor left, output right
-- [ ] Draggable divider between panes
-- [ ] Responsive: stack vertically on mobile
+- [x] Split-pane layout: editor left, output right
+- [x] Draggable divider between panes
+- [x] Responsive: stack vertically on mobile
 - [ ] Commit and push
 
 ---

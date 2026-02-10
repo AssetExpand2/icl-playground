@@ -6,6 +6,7 @@ import { Toolbar } from './components/Toolbar'
 import { OutputPanel } from './components/OutputPanel'
 import { ExamplePicker } from './components/ExamplePicker'
 import { StatusBar } from './components/StatusBar'
+import { SplitPane } from './components/SplitPane'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
@@ -92,23 +93,23 @@ function App() {
         onAction={handleAction}
       />
 
-      {/* Main: Editor (left) + Output (right) */}
-      <main className="flex-1 flex min-h-0">
-        {/* Editor pane */}
-        <div className="flex-1 min-w-0">
+      {/* Main: Editor (left) + Output (right) — draggable split */}
+      <SplitPane
+        left={
           <IclEditor
             ref={editorRef}
             value={source}
             onChange={setSource}
             onCursorPositionChange={setCursorPosition}
           />
-        </div>
-
-        {/* Output pane */}
-        <div className="w-[400px] border-l border-gray-800 bg-gray-900">
+        }
+        right={
           <OutputPanel result={result} onGoToLine={handleGoToLine} />
-        </div>
-      </main>
+        }
+        defaultRightWidth={400}
+        minRightWidth={200}
+        maxRightWidth={800}
+      />
 
       {/* Status Bar */}
       <StatusBar
