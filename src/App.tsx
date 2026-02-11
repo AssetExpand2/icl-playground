@@ -17,7 +17,7 @@ import type { PipelineAction } from './icl/types'
 import './App.css'
 
 // Read icl-runtime version at build time
-const ICL_RUNTIME_VERSION = '0.1.2'
+const ICL_RUNTIME_VERSION = '0.1.4'
 
 const DEFAULT_EXAMPLE = EXAMPLE_CONTRACTS[0]
 
