@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 8 — In Progress
+**Status:** Phase 9 — Complete
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -246,4 +246,21 @@
   - If parse fails, show inline error "Contract must parse successfully first"
   - Single operation → auto-fills JSON editor
   - Multiple operations → dropdown picker to choose which operation
+- [x] Commit and push
+
+---
+
+## Phase 9: ICL Runtime Upgrade
+
+### 9.1 — Upgrade to icl-runtime@0.1.4 (Multi-Target Bundler)
+
+- [x] Install `icl-runtime@0.1.4` from npm (multi-target build with `dist/nodejs/`, `dist/bundler/`, `dist/web/`)
+- [x] Add `vite-plugin-wasm` + `vite-plugin-top-level-await` to Vite config
+- [x] Rewrite `src/icl/runtime.ts` — replace 237-line hand-rolled WASM glue with thin re-export wrapper (~80 lines)
+  - Import directly from `'icl-runtime'` (bundler target auto-resolved via conditional exports)
+  - Keep `initWasm()` / `isInitialized()` API for backward compatibility with `useIcl` hook
+- [x] Delete `public/icl_runtime_bg.wasm` — Vite now bundles WASM with content-hash filename
+- [x] Update `ICL_RUNTIME_VERSION` to `0.1.4` in `App.tsx`
+- [x] Verify build: `npm run build` succeeds with no `fs` externalization warning
+- [x] Future upgrades: just `npm update`, no manual WASM copying
 - [x] Commit and push
