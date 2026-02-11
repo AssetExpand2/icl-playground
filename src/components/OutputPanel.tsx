@@ -308,6 +308,24 @@ function ResultTab({ result }: { result: IclResult }) {
           <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3">
             {result.error}
           </pre>
+
+          {/* How to fix */}
+          <div className="mt-3 rounded border border-amber-400 dark:border-amber-800/40 bg-amber-100 dark:bg-amber-950/20 p-3">
+            <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5">How to fix this</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+              Check that your contract syntax is correct. Run <strong className="text-amber-900 dark:text-gray-300">Parse</strong> first
+              to validate structure, then <strong className="text-amber-900 dark:text-gray-300">Normalize</strong> or{' '}
+              <strong className="text-amber-900 dark:text-gray-300">Verify</strong> to catch semantic issues.
+            </p>
+            <div className="bg-gray-900/80 rounded p-2 border border-gray-700">
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Common causes</p>
+              <ul className="text-xs text-gray-400 dark:text-gray-400 font-mono space-y-0.5 list-disc list-inside">
+                <li>Missing or mismatched braces / brackets</li>
+                <li>Unknown section names (e.g. typo in <code className="text-amber-800 dark:text-amber-300 bg-amber-200 dark:bg-gray-800/50 px-0.5 rounded">Identity</code>)</li>
+                <li>Invalid field types or missing required fields</li>
+              </ul>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="relative">
