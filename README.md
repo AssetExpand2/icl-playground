@@ -2,7 +2,9 @@
 
 A web UI for writing, parsing, and testing [ICL](https://github.com/ICL-System/ICL-Spec) (Intent Contract Language) contracts interactively in the browser.
 
-> **Status:** Early Development — Phase 0
+> **Live:** [https://assetexpand2.github.io/icl-playground/](https://assetexpand2.github.io/icl-playground/)
+>
+> **Status:** All phases complete — Dark/light theme, shareable links, export, auto-deploy
 
 ## What Is This?
 
@@ -10,6 +12,10 @@ ICL Playground lets you:
 - Write ICL contracts in a Monaco editor (same editor as VS Code)
 - Parse, normalize, verify, and hash contracts — all client-side via WASM
 - Visualize the AST and pipeline stages
+- Run determinism checks and contract diffs
+- Execute contracts with custom input JSON
+- Export AST/normalized output and share contracts via URL
+- Toggle dark/light theme
 - Load example contracts to learn the syntax
 
 Everything runs in the browser using the [`icl-runtime`](https://www.npmjs.com/package/icl-runtime) npm package (WASM binding of the Rust implementation). No server required.

@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 5 — In Progress
+**Status:** Complete
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -166,10 +166,10 @@
 
 ### 5.4 — Deployment
 
-- [ ] Set up GitHub Pages or Vercel deployment
-- [ ] CI: build on push to main, auto-deploy
-- [ ] Add deployment URL to README
-- [ ] Commit and push
+- [x] Set up GitHub Pages or Vercel deployment
+- [x] CI: build on push to main, auto-deploy
+- [x] Add deployment URL to README
+- [x] Commit and push
 
 ---
 
