@@ -195,7 +195,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
           >
             {label}
             {id === 'errors' && errorCount > 0 && (
-              <span className="ml-1.5 px-1.5 py-0.5 text-xs rounded-full bg-red-900/50 text-red-400">
+              <span className="ml-1.5 px-1.5 py-0.5 text-xs rounded-full bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-400">
                 {errorCount}
               </span>
             )}
@@ -309,23 +309,8 @@ function ResultTab({ result }: { result: IclResult }) {
             {result.error}
           </pre>
 
-          {/* How to fix */}
-          <div className="mt-3 rounded border border-amber-400 dark:border-amber-800/40 bg-amber-100 dark:bg-amber-950/20 p-3">
-            <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5">How to fix this</p>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-              Check that your contract syntax is correct. Run <strong className="text-amber-900 dark:text-gray-300">Parse</strong> first
-              to validate structure, then <strong className="text-amber-900 dark:text-gray-300">Normalize</strong> or{' '}
-              <strong className="text-amber-900 dark:text-gray-300">Verify</strong> to catch semantic issues.
-            </p>
-            <div className="bg-gray-900/80 rounded p-2 border border-gray-700">
-              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Common causes</p>
-              <ul className="text-xs text-gray-400 dark:text-gray-400 font-mono space-y-0.5 list-disc list-inside">
-                <li>Missing or mismatched braces / brackets</li>
-                <li>Unknown section names (e.g. typo in <code className="text-amber-800 dark:text-amber-300 bg-amber-200 dark:bg-gray-800/50 px-0.5 rounded">Identity</code>)</li>
-                <li>Invalid field types or missing required fields</li>
-              </ul>
-            </div>
-          </div>
+          {/* Context-aware help */}
+          <ErrorHelp action={result.action} error={result.error} />
         </div>
       ) : (
         <div className="relative">
@@ -425,6 +410,140 @@ function AstTab({ result }: { result: IclResult }) {
 }
 
 // --- Helpers ---
+
+interface ErrorHelpInfo {
+  explanation: string;
+  tips: string[];
+  example?: string;
+}
+
+function getErrorHelp(action: string, error: string): ErrorHelpInfo {
+  const lowerErr = error.toLowerCase();
+
+  // Execute errors
+  if (action === 'execute') {
+    if (lowerErr.includes('operation') && lowerErr.includes('field')) {
+      return {
+        explanation: 'The runtime expects a JSON object with an "operation" field that matches a BehavioralSemantics operation name.',
+        tips: [
+          'Add an "operation" field to your input JSON',
+          'The value must match a name in the contract\'s operations list',
+          'Include an "inputs" object with required parameters',
+        ],
+        example: `{\n  "operation": "echo",\n  "inputs": {\n    "message": "Hello, ICL!"\n  }\n}`,
+      };
+    }
+    if (lowerErr.includes('operation') && (lowerErr.includes('not found') || lowerErr.includes('unknown'))) {
+      return {
+        explanation: 'The operation name doesn\'t match any operation defined in this contract.',
+        tips: [
+          'Check the contract\'s BehavioralSemantics → operations for valid names',
+          'Operation names are case-sensitive',
+        ],
+      };
+    }
+    if (lowerErr.includes('parameter') || lowerErr.includes('input')) {
+      return {
+        explanation: 'One or more required input parameters are missing or have the wrong type.',
+        tips: [
+          'Check the operation\'s "parameters" definition for required fields',
+          'Make sure each value matches the expected type (String, Integer, etc.)',
+        ],
+      };
+    }
+    return {
+      explanation: 'The contract executed but encountered a runtime error.',
+      tips: [
+        'Verify the contract parses and normalizes without errors first',
+        'Check that your input JSON is valid and matches the operation signature',
+      ],
+    };
+  }
+
+  // Parse errors
+  if (action === 'parse') {
+    if (lowerErr.includes('unexpected token') || lowerErr.includes('expected')) {
+      return {
+        explanation: 'The parser encountered unexpected syntax in the contract.',
+        tips: [
+          'Check for missing or extra braces { }',
+          'Ensure strings are wrapped in double quotes "..."',
+          'Verify section names are spelled correctly (Contract, Identity, etc.)',
+        ],
+      };
+    }
+    return {
+      explanation: 'The contract could not be parsed. Check the syntax.',
+      tips: [
+        'Every contract starts with Contract "name" { ... }',
+        'Sections like Identity, BehavioralSemantics must be inside the Contract block',
+        'Field values need correct types: strings in quotes, numbers without',
+      ],
+      example: `Contract "my_contract" {\n  Identity {\n    stable_id: "abc-123"\n    version: "1.0.0"\n  }\n}`,
+    };
+  }
+
+  // Normalize errors
+  if (action === 'normalize') {
+    return {
+      explanation: 'Normalization failed — the contract structure may be incomplete.',
+      tips: [
+        'Make sure the contract parses successfully first (run Parse)',
+        'Required sections or fields may be missing',
+      ],
+    };
+  }
+
+  // Verify errors
+  if (action === 'verify') {
+    return {
+      explanation: 'Verification found issues with the contract\'s semantic validity.',
+      tips: [
+        'Check that all referenced operations have valid preconditions/postconditions',
+        'Ensure required fields are present in each section',
+        'Run Parse and Normalize first to rule out structural issues',
+      ],
+    };
+  }
+
+  // Hash errors
+  if (action === 'hash') {
+    return {
+      explanation: 'Hashing failed — the contract must parse and normalize cleanly first.',
+      tips: [
+        'Run Parse → Normalize → Verify before hashing',
+        'The hash is computed on the normalized form',
+      ],
+    };
+  }
+
+  // Fallback
+  return {
+    explanation: 'An error occurred while processing the contract.',
+    tips: ['Try running Parse first to check syntax', 'Check the contract for typos or structural issues'],
+  };
+}
+
+function ErrorHelp({ action, error }: { action: string; error: string }) {
+  const help = getErrorHelp(action, error);
+  return (
+    <div className="mt-3 rounded border border-amber-400 dark:border-amber-800/40 bg-amber-100 dark:bg-amber-950/20 p-3">
+      <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5">How to fix this</p>
+      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{help.explanation}</p>
+      <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-0.5 list-disc list-inside mb-2">
+        {help.tips.map((tip, i) => (
+          <li key={i}>{tip}</li>
+        ))}
+      </ul>
+      {help.example && (
+        <div className="bg-gray-900/80 rounded p-2 border border-gray-700">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Example</p>
+          <pre className="text-xs text-gray-300 font-mono whitespace-pre">{help.example}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function formatOutput(result: IclResult): string {
   if (!result.output) return '(empty)';
