@@ -213,7 +213,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
         ) : activeTab === 'pipeline' ? (
           <PipelineView source={source} />
         ) : !result ? (
-          <EmptyState />
+          <TabHint tab={activeTab} />
         ) : activeTab === 'result' ? (
           <ResultTab result={result} />
         ) : activeTab === 'errors' ? (
@@ -231,11 +231,44 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
 
 // --- Tab Content ---
 
-function EmptyState() {
+const TAB_HINTS: Record<string, { icon: string; heading: string; detail: string }> = {
+  result: {
+    icon: '⎔',
+    heading: 'No output yet',
+    detail: 'Click Parse, Normalize, Verify, or Hash in the toolbar to see results here.',
+  },
+  errors: {
+    icon: '✓',
+    heading: 'No errors to show',
+    detail: 'Run any toolbar action — errors and warnings will appear here with clickable line links.',
+  },
+  'ast-tree': {
+    icon: '🌳',
+    heading: 'AST Tree',
+    detail: 'Click Parse in the toolbar to generate the Abstract Syntax Tree. You can expand/collapse nodes and click to jump to source lines.',
+  },
+  ast: {
+    icon: '{ }',
+    heading: 'AST JSON',
+    detail: 'Click Parse to view the raw JSON representation of the contract\'s syntax tree.',
+  },
+};
+
+function TabHint({ tab }: { tab: TabId }) {
+  const hint = TAB_HINTS[tab];
+  if (!hint) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-gray-600">
+        <span className="text-2xl mb-2">⎔</span>
+        <p className="text-sm">Click a toolbar button to run an ICL operation</p>
+      </div>
+    );
+  }
   return (
-    <div className="flex flex-col items-center justify-center h-full text-gray-600">
-      <span className="text-2xl mb-2">⎔</span>
-      <p className="text-sm">Click a toolbar button to run an ICL operation</p>
+    <div className="flex flex-col items-center justify-center h-full text-gray-600 max-w-xs mx-auto text-center">
+      <span className="text-2xl mb-2">{hint.icon}</span>
+      <p className="text-sm font-medium text-gray-500 mb-1">{hint.heading}</p>
+      <p className="text-xs text-gray-600 leading-relaxed">{hint.detail}</p>
     </div>
   );
 }

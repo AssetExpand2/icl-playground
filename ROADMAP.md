@@ -193,15 +193,15 @@
 - [x] First-visit welcome modal explaining what ICL is in 2-3 sentences
 - [x] Quick-start: "Try clicking Parse →" with arrow pointing to toolbar
 - [x] "Don't show again" checkbox, persisted in localStorage
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 7.2 — Contextual Placeholders & Hints
 
-- [ ] Empty editor placeholder text: brief ICL contract skeleton with comments
-- [ ] Each OutputPanel tab shows a help hint when empty (e.g., "Run Parse to see the AST here")
-- [ ] Execute tab: explain `{"operation": "...", "inputs": {...}}` format visually
-- [ ] Diff tab: explain what normalization-based diffing means
-- [ ] Determinism tab: explain what deterministic hashing proves
+- [x] Empty editor placeholder text: brief ICL contract skeleton with comments
+- [x] Each OutputPanel tab shows a help hint when empty (e.g., "Run Parse to see the AST here")
+- [x] Execute tab: explain `{"operation": "...", "inputs": {...}}` format visually
+- [x] Diff tab: explain what normalization-based diffing means
+- [x] Determinism tab: explain what deterministic hashing proves
 - [ ] Commit and push
 
 ### 7.3 — Interactive Guided Tour

@@ -154,6 +154,16 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
         </div>
       )}
 
+      {/* Contextual hint — shown when no diff has been run */}
+      {!stats && !error && (
+        <div className="px-3 py-2 bg-blue-950/20 border-b border-blue-900/20">
+          <p className="text-xs text-blue-400/80">
+            <strong>Normalization-based diff:</strong> Both contracts are normalized to canonical form before comparison, so superficial
+            differences (whitespace, key order) are ignored — only semantic changes are shown.
+          </p>
+        </div>
+      )}
+
       {/* Side-by-side editors */}
       <div className="flex flex-1 min-h-0">
         {/* Left editor */}

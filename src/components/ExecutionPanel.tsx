@@ -136,7 +136,12 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
         {/* Input JSON editor */}
         <div className="flex flex-col border-b border-gray-800" style={{ height: '35%', minHeight: 80 }}>
           <div className="px-3 py-1.5 bg-gray-900/60 border-b border-gray-800 text-xs text-gray-500 flex items-center gap-2">
-            <span>Input Parameters — requires "operation" and "inputs" fields</span>
+            <span>Input JSON</span>
+            <span className="text-gray-700">—</span>
+            <span className="text-gray-600">
+              Format: <code className="text-gray-400">{"{"}"operation": "name", "inputs": {"{"} ... {"}"}{"}"}
+              </code>
+            </span>
           </div>
           <div className="flex-1 min-h-0">
             <Editor

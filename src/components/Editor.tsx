@@ -230,23 +230,45 @@ export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
     }, []);
 
     return (
-      <Editor
-        language={ICL_LANGUAGE_ID}
-        value={value}
-        onChange={(v) => onChange(v ?? '')}
-        onMount={handleMount}
-        options={{
-          minimap: { enabled: false },
-          fontSize: 14,
-          lineNumbers: 'on',
-          scrollBeyondLastLine: false,
-          wordWrap: 'on',
-          tabSize: 2,
-          automaticLayout: true,
-          bracketPairColorization: { enabled: true },
-          padding: { top: 12 },
-        }}
-      />
+      <div className="relative h-full">
+        {/* Placeholder overlay when editor is empty */}
+        {!value?.trim() && (
+          <div className="absolute inset-0 pointer-events-none z-10 flex items-start px-16 pt-14">
+            <pre className="text-sm text-gray-600/60 font-mono leading-relaxed whitespace-pre select-none">
+{`Contract "my_contract" {
+  Identity {
+    stable_id: "..."
+    version: "1.0.0"
+  }
+  BehavioralSemantics {
+    operations: [
+      { name: "echo"
+        parameters: { message: String }
+      }
+    ]
+  }
+}`}
+            </pre>
+          </div>
+        )}
+        <Editor
+          language={ICL_LANGUAGE_ID}
+          value={value}
+          onChange={(v) => onChange(v ?? '')}
+          onMount={handleMount}
+          options={{
+            minimap: { enabled: false },
+            fontSize: 14,
+            lineNumbers: 'on',
+            scrollBeyondLastLine: false,
+            wordWrap: 'on',
+            tabSize: 2,
+            automaticLayout: true,
+            bracketPairColorization: { enabled: true },
+            padding: { top: 12 },
+          }}
+        />
+      </div>
     );
   },
 );
