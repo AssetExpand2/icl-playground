@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import type { IclResult } from '../icl/types';
 import { AstViewer } from './AstViewer';
 import { PipelineView } from './PipelineView';
@@ -109,15 +109,26 @@ interface OutputPanelProps {
   onGoToLine?: (line: number, column?: number) => void;
 }
 
+export interface OutputPanelHandle {
+  switchToTab: (group: GroupId, tab: TabId) => void;
+}
+
 // Default tab per group so switching groups lands on something sensible
 const DEFAULT_TAB: Partial<Record<GroupId, TabId>> = {
   output: 'result',
   tools: 'pipeline',
 };
 
-export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
+export const OutputPanel = forwardRef<OutputPanelHandle, OutputPanelProps>(function OutputPanel({ result, source, onGoToLine }, ref) {
   const [activeGroup, setActiveGroup] = useState<GroupId>('output');
   const [activeTab, setActiveTab] = useState<TabId>('result');
+
+  useImperativeHandle(ref, () => ({
+    switchToTab(group: GroupId, tab: TabId) {
+      setActiveGroup(group);
+      setActiveTab(tab);
+    },
+  }));
 
   const errors = result ? parseErrors(result) : [];
   const errorCount = errors.length;
@@ -240,7 +251,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
       )}
     </div>
   );
-}
+});
 
 // --- Tab Content ---
 

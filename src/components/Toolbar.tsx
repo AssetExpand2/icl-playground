@@ -52,28 +52,32 @@ interface ToolbarProps {
   loading: boolean;
   activeAction: PipelineAction | 'format' | null;
   onAction: (action: PipelineAction) => void;
+  onNavigateExecute?: () => void;
 }
 
-export function Toolbar({ wasmReady, loading, activeAction, onAction }: ToolbarProps) {
+export function Toolbar({ wasmReady, loading, activeAction, onAction, onNavigateExecute }: ToolbarProps) {
   return (
     <div className="border-b border-gray-800 bg-gray-900/50 px-4 py-2 flex items-center gap-2">
       {/* Pipeline action buttons */}
       <div className="flex items-center gap-1.5">
         {ACTIONS.map(({ action, label, icon, available }) => {
           const isActive = loading && activeAction === action;
-          const disabled = !wasmReady || loading || !available;
+          const isNavigate = action === 'execute';
+          const disabled = isNavigate ? false : (!wasmReady || loading || !available);
 
           return (
             <button
               key={action}
               data-tour={`toolbar-${action}`}
               onClick={() => {
-                if (action !== 'format') {
+                if (action === 'execute' && onNavigateExecute) {
+                  onNavigateExecute();
+                } else if (action !== 'format' && action !== 'execute') {
                   onAction(action);
                 }
               }}
               disabled={disabled}
-              title={!available ? `${label} — not yet available in icl-runtime` : label}
+              title={isNavigate ? 'Open Execute panel (Tools → Execute)' : !available ? `${label} — not yet available in icl-runtime` : label}
               className={`
                 flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
                 border transition-colors duration-150 active:scale-[0.97]

@@ -6,6 +6,7 @@ import { IclEditor } from './components/Editor'
 import type { IclEditorHandle } from './components/Editor'
 import { Toolbar } from './components/Toolbar'
 import { OutputPanel } from './components/OutputPanel'
+import type { OutputPanelHandle } from './components/OutputPanel'
 import { ExamplePicker } from './components/ExamplePicker'
 import { StatusBar } from './components/StatusBar'
 import { SplitPane } from './components/SplitPane'
@@ -28,6 +29,7 @@ function App() {
   const [activeAction, setActiveAction] = useState<PipelineAction | null>(null)
   const [cursorPosition, setCursorPosition] = useState({ line: 1, column: 1 })
   const editorRef = useRef<IclEditorHandle>(null)
+  const outputRef = useRef<OutputPanelHandle>(null)
   const [copied, setCopied] = useState(false)
   const [tourActive, setTourActive] = useState(false)
 
@@ -78,6 +80,10 @@ function App() {
   // Handle click-to-jump from error panel
   const handleGoToLine = useCallback((line: number, column?: number) => {
     editorRef.current?.goToLine(line, column)
+  }, [])
+
+  const handleNavigateExecute = useCallback(() => {
+    outputRef.current?.switchToTab('tools', 'execute')
   }, [])
 
   const handleShare = useCallback(async () => {
@@ -154,6 +160,7 @@ function App() {
         loading={loading}
         activeAction={activeAction}
         onAction={handleAction}
+        onNavigateExecute={handleNavigateExecute}
       />
 
       {/* Main: Editor (left) + Output (right) — draggable split */}
@@ -167,7 +174,7 @@ function App() {
           />
         }
         right={
-          <OutputPanel result={result} source={source} onGoToLine={handleGoToLine} />
+          <OutputPanel ref={outputRef} result={result} source={source} onGoToLine={handleGoToLine} />
         }
         defaultRightWidth={400}
         minRightWidth={200}
