@@ -1,22 +1,35 @@
 # ICL Playground
 
-A web UI for writing, parsing, and testing [ICL](https://github.com/ICL-System/ICL-Spec) (Intent Contract Language) contracts interactively in the browser.
+> **Write, parse, verify, and execute [ICL](https://github.com/ICL-System/ICL-Spec) contracts — entirely in your browser.**
 
-> **Live:** [https://assetexpand2.github.io/icl-playground/](https://assetexpand2.github.io/icl-playground/)
->
-> **Status:** All phases complete — Dark/light theme, shareable links, export, auto-deploy
+[![Live Demo](https://img.shields.io/badge/demo-icl--playground.vercel.app-blue)](https://icl-playground.vercel.app)
+[![Built with](https://img.shields.io/badge/built_with-icl--runtime_WASM-green)](https://www.npmjs.com/package/icl-runtime)
+
+**[Try it live →](https://icl-playground.vercel.app)**
+
+## What Is ICL?
+
+**Intent Contract Language (ICL)** is a declarative language for defining contracts between humans and machines. Contracts specify identity, purpose, data semantics, behavioral rules, execution constraints, and mutual commitments — all in a single, self-describing document that is deterministically parseable, normalizable, and hashable.
 
 ## What Is This?
 
-ICL Playground lets you:
-- Write ICL contracts in a Monaco editor (same editor as VS Code)
-- Parse, normalize, verify, and hash contracts — all client-side via WASM
-- Visualize the AST and pipeline stages
-- Run determinism checks and contract diffs
-- Execute contracts with custom input JSON
-- Export AST/normalized output and share contracts via URL
-- Toggle dark/light theme
-- Load example contracts to learn the syntax
+ICL Playground is a zero-install, browser-based IDE for ICL contracts. Everything runs client-side via WebAssembly — no server, no backend, no data leaves your machine.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Monaco Editor** | VS Code-quality editing with ICL syntax highlighting |
+| **Full Pipeline** | Parse → Normalize → Verify → Hash — one click each |
+| **AST Explorer** | Interactive tree view with click-to-navigate |
+| **Pipeline Visualizer** | Step-through the ICL pipeline stage by stage |
+| **Execution** | Run contracts with custom JSON input |
+| **Determinism Check** | Hash N times, prove identical results |
+| **Contract Diff** | Side-by-side normalized diff of two contracts |
+| **Export** | Download AST JSON, normalized ICL, or copy to clipboard |
+| **Shareable Links** | Encode contracts in URL — share with a link |
+| **Dark / Light Theme** | Toggle with localStorage persistence |
+| **Example Contracts** | Pre-loaded examples to learn the syntax |
 
 Everything runs in the browser using the [`icl-runtime`](https://www.npmjs.com/package/icl-runtime) npm package (WASM binding of the Rust implementation). No server required.
 

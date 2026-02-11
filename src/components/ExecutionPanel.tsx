@@ -24,7 +24,9 @@ interface ExecutionPanelProps {
 
 export function ExecutionPanel({ source }: ExecutionPanelProps) {
   const { theme } = useTheme();
-  const [inputJson, setInputJson] = useState('{\n  \n}');
+  const [inputJson, setInputJson] = useState(
+    '{\n  "operation": "echo",\n  "inputs": {\n    "message": "Hello, ICL!"\n  }\n}'
+  );
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [running, setRunning] = useState(false);
 
@@ -134,7 +136,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
         {/* Input JSON editor */}
         <div className="flex flex-col border-b border-gray-800" style={{ height: '35%', minHeight: 80 }}>
           <div className="px-3 py-1.5 bg-gray-900/60 border-b border-gray-800 text-xs text-gray-500 flex items-center gap-2">
-            <span>Input Parameters (JSON)</span>
+            <span>Input Parameters — requires "operation" and "inputs" fields</span>
           </div>
           <div className="flex-1 min-h-0">
             <Editor
@@ -161,7 +163,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
           {!result ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-600">
               <span className="text-2xl mb-2">▶</span>
-              <p className="text-sm">Enter input JSON and click Execute</p>
+              <p className="text-sm">Set "operation" to match a BehavioralSemantics operation name, then click Execute</p>
             </div>
           ) : result.error ? (
             <div className="p-4">
