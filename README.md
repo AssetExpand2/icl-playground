@@ -24,12 +24,15 @@ ICL Playground is a zero-install, browser-based IDE for ICL contracts. Everythin
 | **AST Explorer** | Interactive tree view with click-to-navigate |
 | **Pipeline Visualizer** | Step-through the ICL pipeline stage by stage |
 | **Execution** | Run contracts with custom JSON input |
+| **Generate Template** | Auto-generate JSON input from contract operations |
 | **Determinism Check** | Hash N times, prove identical results |
 | **Contract Diff** | Side-by-side normalized diff of two contracts |
 | **Export** | Download AST JSON, normalized ICL, or copy to clipboard |
 | **Shareable Links** | Encode contracts in URL — share with a link |
+| **Guided Tour** | Step-by-step interactive walkthrough of the UI |
+| **Help Panel** | Searchable ICL quick reference with examples |
 | **Dark / Light Theme** | Toggle with localStorage persistence |
-| **Example Contracts** | Pre-loaded examples to learn the syntax |
+| **Example Contracts** | 6 pre-loaded examples with complexity badges |
 
 Everything runs in the browser using the [`icl-runtime`](https://www.npmjs.com/package/icl-runtime) npm package (WASM binding of the Rust implementation). No server required.
 
