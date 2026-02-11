@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Complete
+**Status:** Phase 6 — In Progress
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -170,3 +170,62 @@
 - [x] CI: build on push to main, auto-deploy
 - [x] Add deployment URL to README
 - [x] Commit and push
+
+---
+
+## Phase 6: UI Refinements
+
+### 6.1 — Tab Grouping
+
+- [ ] Group OutputPanel tabs into sections: **Output** (Result, Errors, AST Tree, AST JSON) and **Tools** (Pipeline, Determinism, Diff, Execute, Export)
+- [ ] Section switcher bar above tabs (two clickable group labels)
+- [ ] Only show tabs for the active group — eliminates overflow
+- [ ] Persist active group in component state
+- [ ] Responsive: works on narrow screens without scroll
+- [ ] Commit and push
+
+---
+
+## Phase 7: Onboarding & Help
+
+### 7.1 — Welcome Overlay
+
+- [ ] First-visit welcome modal explaining what ICL is in 2-3 sentences
+- [ ] Quick-start: "Try clicking Parse →" with arrow pointing to toolbar
+- [ ] "Don't show again" checkbox, persisted in localStorage
+- [ ] Commit and push
+
+### 7.2 — Contextual Placeholders & Hints
+
+- [ ] Empty editor placeholder text: brief ICL contract skeleton with comments
+- [ ] Each OutputPanel tab shows a help hint when empty (e.g., "Run Parse to see the AST here")
+- [ ] Execute tab: explain `{"operation": "...", "inputs": {...}}` format visually
+- [ ] Diff tab: explain what normalization-based diffing means
+- [ ] Determinism tab: explain what deterministic hashing proves
+- [ ] Commit and push
+
+### 7.3 — Interactive Guided Tour
+
+- [ ] Step-by-step tooltip tour: Editor → Parse → AST Tree → Normalize → Verify → Hash
+- [ ] Each step highlights the relevant UI area with a pulsing border
+- [ ] "Next" / "Skip" buttons to advance or dismiss
+- [ ] Triggered by "?" help button in header (always accessible)
+- [ ] Commit and push
+
+### 7.4 — ICL Quick Reference Panel
+
+- [ ] New "Help" tab in OutputPanel with collapsible sections:
+  - What is ICL? (2-paragraph summary)
+  - Contract structure (all 7 sections with 1-line descriptions)
+  - Pipeline stages explained (Parse → Normalize → Verify → Hash → Execute)
+  - Input format for Execute (`operation` + `inputs` explained)
+  - Links to full docs (ICL-Docs, ICL-Spec)
+- [ ] Searchable / filterable
+- [ ] Commit and push
+
+### 7.5 — Improved Example Contracts
+
+- [ ] Add 2-3 more examples covering different use cases (data governance, IoT, access control)
+- [ ] Each example includes header comments explaining what it demonstrates
+- [ ] Example picker shows a "complexity" badge (beginner / intermediate / advanced)
+- [ ] Commit and push
