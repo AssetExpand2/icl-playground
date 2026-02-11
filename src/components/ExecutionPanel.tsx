@@ -186,10 +186,10 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
               {/* Help: what to do */}
               <div className="mt-4 rounded border border-amber-400 dark:border-amber-800/40 bg-amber-100 dark:bg-amber-950/20 p-3">
                 <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5">How to fix this</p>
-                <p className="text-xs text-gray-400 mb-2">
-                  Make sure your input JSON has an <code className="text-amber-300 bg-gray-800/50 px-1 rounded">"operation"</code> field
-                  matching a name from the contract's <strong className="text-gray-300">BehavioralSemantics → operations</strong>,
-                  and an <code className="text-amber-300 bg-gray-800/50 px-1 rounded">"inputs"</code> object with the required parameters.
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                  Make sure your input JSON has an <code className="text-amber-800 dark:text-amber-300 bg-amber-200 dark:bg-gray-800/50 px-1 rounded">"operation"</code> field
+                  matching a name from the contract's <strong className="text-amber-900 dark:text-gray-300">BehavioralSemantics → operations</strong>,
+                  and an <code className="text-amber-800 dark:text-amber-300 bg-amber-200 dark:bg-gray-800/50 px-1 rounded">"inputs"</code> object with the required parameters.
                 </p>
                 <div className="bg-gray-900/80 rounded p-2 border border-gray-700">
                   <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Example</p>
