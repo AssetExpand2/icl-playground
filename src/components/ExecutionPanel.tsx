@@ -177,11 +177,8 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
                 <span className="inline-block w-2 h-2 rounded-full bg-red-500" />
                 <span className="text-sm font-medium text-red-700 dark:text-red-400">Execution Failed</span>
               </div>
-              <div className="relative">
-                <div className="absolute top-2 right-2 z-10">
-                  <CopyButton text={result.error} />
-                </div>
-                <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3 pr-20">
+              <div>
+                <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3">
                   {result.error}
                 </pre>
               </div>

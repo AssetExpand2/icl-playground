@@ -152,11 +152,8 @@ function StageOutput({ stage }: { stage: StageResult }) {
 
       {/* Body */}
       {stage.status === 'error' && stage.error && (
-        <div className="relative">
-          <div className="absolute top-2 right-2 z-10">
-            <CopyButton text={stage.error} />
-          </div>
-          <pre className="p-3 text-xs text-red-600 dark:text-red-400 font-mono whitespace-pre-wrap bg-red-50 dark:bg-gray-950/50 max-h-40 overflow-auto pr-12">
+        <div>
+          <pre className="p-3 text-xs text-red-600 dark:text-red-400 font-mono whitespace-pre-wrap bg-red-50 dark:bg-gray-950/50 max-h-40 overflow-auto">
             {stage.error}
           </pre>
         </div>

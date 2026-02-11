@@ -304,11 +304,8 @@ function ResultTab({ result }: { result: IclResult }) {
 
       {/* Output */}
       {result.error ? (
-        <div className="relative">
-          <div className="absolute top-2 right-2 z-10">
-            <CopyButton text={result.error} />
-          </div>
-          <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3 pr-20">
+        <div>
+          <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3">
             {result.error}
           </pre>
         </div>
