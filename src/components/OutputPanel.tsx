@@ -5,10 +5,11 @@ import { PipelineView } from './PipelineView';
 import { DeterminismCheck } from './DeterminismCheck';
 import { ContractDiff } from './ContractDiff';
 import { ExecutionPanel } from './ExecutionPanel';
+import { ExportPanel } from './ExportPanel';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute' | 'export';
 
 interface TabDef {
   id: TabId;
@@ -24,6 +25,7 @@ const TABS: TabDef[] = [
   { id: 'determinism', label: 'Determinism' },
   { id: 'diff', label: 'Diff' },
   { id: 'execute', label: 'Execute' },
+  { id: 'export', label: 'Export' },
 ];
 
 // --- Error Parsing ---
@@ -149,6 +151,8 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
       <div className="flex-1 overflow-auto p-4">
         {activeTab === 'determinism' ? (
           <DeterminismCheck source={source} />
+        ) : activeTab === 'export' ? (
+          <ExportPanel source={source} lastOutput={result?.output} />
         ) : activeTab === 'pipeline' ? (
           <PipelineView source={source} />
         ) : !result ? (

@@ -159,10 +159,10 @@
 
 ### 5.3 — Export
 
-- [ ] "Export AST" — download AST as JSON file
-- [ ] "Export Normalized" — download canonical form as `.icl` file
-- [ ] "Copy to Clipboard" for all outputs
-- [ ] Commit and push
+- [x] "Export AST" — download AST as JSON file
+- [x] "Export Normalized" — download canonical form as `.icl` file
+- [x] "Copy to Clipboard" for all outputs
+- [x] Commit and push
 
 ### 5.4 — Deployment
 
