@@ -152,10 +152,10 @@
 
 ### 5.2 — Shareable Links
 
-- [ ] Encode contract source in URL (base64 or compressed)
-- [ ] Loading a shared URL populates the editor
-- [ ] "Share" button copies link to clipboard
-- [ ] Commit and push
+- [x] Encode contract source in URL (base64 or compressed)
+- [x] Loading a shared URL populates the editor
+- [x] "Share" button copies link to clipboard
+- [x] Commit and push
 
 ### 5.3 — Export
 
