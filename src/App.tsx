@@ -90,7 +90,7 @@ function App() {
 
   return (
     <ThemeContext.Provider value={themeCtx}>
-    <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
+    <div className="h-screen bg-gray-950 text-gray-100 flex flex-col overflow-hidden">
       <WelcomeOverlay />
       <GuidedTour active={tourActive} onFinish={() => setTourActive(false)} />
       {/* Header */}

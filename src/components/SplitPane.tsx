@@ -91,7 +91,7 @@ export function SplitPane({
   return (
     <div ref={containerRef} className="flex flex-1 min-h-0">
       {/* Left pane — takes remaining space */}
-      <div className="flex-1 min-w-0">{left}</div>
+      <div className="flex-1 min-w-0 min-h-0 overflow-hidden">{left}</div>
 
       {/* Draggable divider */}
       <div
