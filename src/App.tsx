@@ -9,6 +9,7 @@ import { OutputPanel } from './components/OutputPanel'
 import { ExamplePicker } from './components/ExamplePicker'
 import { StatusBar } from './components/StatusBar'
 import { SplitPane } from './components/SplitPane'
+import { WelcomeOverlay } from './components/WelcomeOverlay'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
@@ -88,6 +89,7 @@ function App() {
   return (
     <ThemeContext.Provider value={themeCtx}>
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
+      <WelcomeOverlay />
       {/* Header */}
       <header className="border-b border-gray-800 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">

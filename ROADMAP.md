@@ -182,7 +182,7 @@
 - [x] Only show tabs for the active group — eliminates overflow
 - [x] Persist active group in component state
 - [x] Responsive: works on narrow screens without scroll
-- [ ] Commit and push
+- [x] Commit and push
 
 ---
 
@@ -190,9 +190,9 @@
 
 ### 7.1 — Welcome Overlay
 
-- [ ] First-visit welcome modal explaining what ICL is in 2-3 sentences
-- [ ] Quick-start: "Try clicking Parse →" with arrow pointing to toolbar
-- [ ] "Don't show again" checkbox, persisted in localStorage
+- [x] First-visit welcome modal explaining what ICL is in 2-3 sentences
+- [x] Quick-start: "Try clicking Parse →" with arrow pointing to toolbar
+- [x] "Don't show again" checkbox, persisted in localStorage
 - [ ] Commit and push
 
 ### 7.2 — Contextual Placeholders & Hints
