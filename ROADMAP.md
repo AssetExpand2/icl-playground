@@ -228,4 +228,4 @@
 - [x] Add 2-3 more examples covering different use cases (data governance, IoT, access control)
 - [x] Each example includes header comments explaining what it demonstrates
 - [x] Example picker shows a "complexity" badge (beginner / intermediate / advanced)
-- [ ] Commit and push
+- [x] Commit and push

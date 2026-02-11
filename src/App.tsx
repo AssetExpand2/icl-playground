@@ -105,7 +105,7 @@ function App() {
           {/* Help tour button */}
           <button
             onClick={() => setTourActive(true)}
-            className="p-1.5 rounded text-gray-400 hover:text-gray-100 hover:bg-gray-800 transition-colors"
+            className="p-1.5 rounded text-gray-400 border border-gray-700 hover:text-gray-100 hover:bg-gray-800 hover:border-gray-600 transition-colors active:scale-[0.97]"
             title="Start guided tour"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -116,8 +116,8 @@ function App() {
           <button
             onClick={handleShare}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded text-sm font-medium
-              bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-gray-50
-              transition-colors duration-150"
+              bg-gray-800 text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-gray-50 hover:border-gray-600
+              transition-colors duration-150 active:scale-[0.97]"
             title="Copy shareable link to clipboard"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -128,7 +128,7 @@ function App() {
           {/* Theme toggle */}
           <button
             onClick={themeCtx.toggle}
-            className="p-1.5 rounded text-gray-400 hover:text-gray-100 hover:bg-gray-800 transition-colors"
+            className="p-1.5 rounded text-gray-400 border border-gray-700 hover:text-gray-100 hover:bg-gray-800 hover:border-gray-600 transition-colors active:scale-[0.97]"
             title={themeCtx.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {themeCtx.theme === 'dark' ? (

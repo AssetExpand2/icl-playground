@@ -76,12 +76,12 @@ export function Toolbar({ wasmReady, loading, activeAction, onAction }: ToolbarP
               title={!available ? `${label} — not yet available in icl-runtime` : label}
               className={`
                 flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
-                transition-colors duration-150
+                border transition-colors duration-150 active:scale-[0.97]
                 ${isActive
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-blue-600 text-white border-blue-500'
                   : available
-                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-gray-50'
-                    : 'bg-gray-800/50 text-gray-600 cursor-not-allowed'
+                    ? 'bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700 hover:text-gray-50 hover:border-gray-600'
+                    : 'bg-gray-800/50 text-gray-600 border-gray-700/50 cursor-not-allowed'
                 }
                 ${disabled && !isActive ? 'opacity-60' : ''}
               `}

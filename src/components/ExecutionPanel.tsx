@@ -6,6 +6,7 @@ import {
   isInitialized,
   execute,
 } from '../icl/runtime';
+import { CopyButton } from './CopyButton';
 
 // --- Types ---
 
@@ -108,8 +109,8 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
           onClick={handleExecute}
           disabled={running || !source.trim()}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
-            bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed
-            transition-colors"
+            bg-emerald-600 text-white border border-emerald-500 hover:bg-emerald-500 hover:border-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed
+            transition-colors active:scale-[0.97]"
         >
           {running ? (
             <span className="flex items-center gap-1.5">
@@ -176,9 +177,33 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
                 <span className="inline-block w-2 h-2 rounded-full bg-red-500" />
                 <span className="text-sm font-medium text-red-400">Execution Failed</span>
               </div>
-              <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3">
-                {result.error}
-              </pre>
+              <div className="relative">
+                <div className="absolute top-2 right-2 z-10">
+                  <CopyButton text={result.error} />
+                </div>
+                <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3 pr-20">
+                  {result.error}
+                </pre>
+              </div>
+
+              {/* Help: what to do */}
+              <div className="mt-4 rounded border border-amber-800/40 bg-amber-950/20 p-3">
+                <p className="text-xs font-semibold text-amber-400 mb-1.5">How to fix this</p>
+                <p className="text-xs text-gray-400 mb-2">
+                  Make sure your input JSON has an <code className="text-amber-300 bg-gray-800/50 px-1 rounded">"operation"</code> field
+                  matching a name from the contract's <strong className="text-gray-300">BehavioralSemantics → operations</strong>,
+                  and an <code className="text-amber-300 bg-gray-800/50 px-1 rounded">"inputs"</code> object with the required parameters.
+                </p>
+                <div className="bg-gray-900/80 rounded p-2 border border-gray-700">
+                  <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Example</p>
+                  <pre className="text-xs text-gray-300 font-mono whitespace-pre">{`{
+  "operation": "echo",
+  "inputs": {
+    "message": "Hello, ICL!"
+  }
+}`}</pre>
+                </div>
+              </div>
             </div>
           ) : sections ? (
             <div className="p-4 space-y-4">
@@ -257,9 +282,14 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
                 <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
                 <span className="text-sm font-medium text-green-400">Execution Succeeded</span>
               </div>
-              <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3">
-                {formattedOutput ?? '(no output)'}
-              </pre>
+              <div className="relative">
+                <div className="absolute top-2 right-2 z-10">
+                  <CopyButton text={formattedOutput ?? ''} />
+                </div>
+                <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3 pr-20">
+                  {formattedOutput ?? '(no output)'}
+                </pre>
+              </div>
             </div>
           )}
         </div>

@@ -86,6 +86,11 @@ export function GuidedTour({ active, onFinish }: GuidedTourProps) {
 
     const rect = el.getBoundingClientRect();
     const gap = 12;
+    const tooltipWidth = 288; // max-w-xs = 20rem = 320px, but content is ~288px
+    const tooltipHeight = 160; // approximate height
+    const padding = 12; // viewport edge padding
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
 
     let top = 0;
     let left = 0;
@@ -93,21 +98,25 @@ export function GuidedTour({ active, onFinish }: GuidedTourProps) {
     switch (currentStep.position) {
       case 'bottom':
         top = rect.bottom + gap;
-        left = rect.left + rect.width / 2;
+        left = rect.left + rect.width / 2 - tooltipWidth / 2;
         break;
       case 'top':
-        top = rect.top - gap;
-        left = rect.left + rect.width / 2;
+        top = rect.top - gap - tooltipHeight;
+        left = rect.left + rect.width / 2 - tooltipWidth / 2;
         break;
       case 'right':
-        top = rect.top + rect.height / 2;
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
         left = rect.right + gap;
         break;
       case 'left':
-        top = rect.top + rect.height / 2;
-        left = rect.left - gap;
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.left - gap - tooltipWidth;
         break;
     }
+
+    // Clamp to viewport
+    left = Math.max(padding, Math.min(left, vw - tooltipWidth - padding));
+    top = Math.max(padding, Math.min(top, vh - tooltipHeight - padding));
 
     setPos({ top, left, highlightRect: rect });
   }, [currentStep, active]);
@@ -171,14 +180,6 @@ export function GuidedTour({ active, onFinish }: GuidedTourProps) {
           style={{
             top: pos.top,
             left: pos.left,
-            transform:
-              currentStep.position === 'bottom'
-                ? 'translateX(-50%)'
-                : currentStep.position === 'top'
-                  ? 'translateX(-50%) translateY(-100%)'
-                  : currentStep.position === 'right'
-                    ? 'translateY(-50%)'
-                    : 'translateX(-100%) translateY(-50%)',
           }}
         >
           {/* Step counter */}

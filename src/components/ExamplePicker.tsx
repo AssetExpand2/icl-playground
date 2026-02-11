@@ -56,8 +56,8 @@ export function ExamplePicker({ dirty, onSelect }: ExamplePickerProps) {
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
-          bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-gray-50
-          transition-colors duration-150"
+          bg-gray-800 text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-gray-50 hover:border-gray-600
+          transition-colors duration-150 active:scale-[0.97]"
       >
         <span className="text-xs">📄</span>
         <span>Examples</span>

@@ -7,6 +7,7 @@ import { ContractDiff } from './ContractDiff';
 import { ExecutionPanel } from './ExecutionPanel';
 import { ExportPanel } from './ExportPanel';
 import { HelpPanel } from './HelpPanel';
+import { CopyButton } from './CopyButton';
 
 // --- Tab Definitions ---
 
@@ -154,10 +155,10 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
             data-tour={`group-${id}`}
             onClick={() => handleGroupSwitch(id)}
             className={`
-              px-3 py-1 text-xs font-semibold rounded-t transition-colors
+              px-3 py-1 text-xs font-semibold rounded-t border border-b-0 transition-colors active:scale-[0.97]
               ${activeGroup === id
-                ? 'bg-gray-800 text-gray-50'
-                : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/50'
+                ? 'bg-gray-800 text-gray-50 border-gray-700'
+                : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-gray-800/50 hover:border-gray-700'
               }
             `}
           >
@@ -297,13 +298,23 @@ function ResultTab({ result }: { result: IclResult }) {
 
       {/* Output */}
       {result.error ? (
-        <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3">
-          {result.error}
-        </pre>
+        <div className="relative">
+          <div className="absolute top-2 right-2 z-10">
+            <CopyButton text={result.error} />
+          </div>
+          <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3 pr-20">
+            {result.error}
+          </pre>
+        </div>
       ) : (
-        <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3">
-          {formatOutput(result)}
-        </pre>
+        <div className="relative">
+          <div className="absolute top-2 right-2 z-10">
+            <CopyButton text={formatOutput(result)} />
+          </div>
+          <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3 pr-20">
+            {formatOutput(result)}
+          </pre>
+        </div>
       )}
     </div>
   );
@@ -381,9 +392,14 @@ function AstTab({ result }: { result: IclResult }) {
   }
 
   return (
-    <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3">
-      {ast}
-    </pre>
+    <div className="relative">
+      <div className="absolute top-2 right-2 z-10">
+        <CopyButton text={ast} />
+      </div>
+      <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono bg-gray-800/50 rounded p-3 pr-20">
+        {ast}
+      </pre>
+    </div>
   );
 }
 

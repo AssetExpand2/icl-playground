@@ -126,8 +126,8 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
           onClick={runDiff}
           disabled={running || !leftSource.trim() || !rightSource.trim()}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
-            bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed
-            transition-colors"
+            bg-blue-600 text-white border border-blue-500 hover:bg-blue-500 hover:border-blue-400 disabled:opacity-50 disabled:cursor-not-allowed
+            transition-colors active:scale-[0.97]"
         >
           {running ? (
             <span>Diffing...</span>

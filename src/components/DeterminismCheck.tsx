@@ -84,8 +84,8 @@ export function DeterminismCheck({ source }: DeterminismCheckProps) {
           onClick={runCheck}
           disabled={running || !source.trim()}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
-            bg-purple-600 text-white hover:bg-purple-500 disabled:opacity-50 disabled:cursor-not-allowed
-            transition-colors"
+            bg-purple-600 text-white border border-purple-500 hover:bg-purple-500 hover:border-purple-400 disabled:opacity-50 disabled:cursor-not-allowed
+            transition-colors active:scale-[0.97]"
         >
           {running ? (
             <>
