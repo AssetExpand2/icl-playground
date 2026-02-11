@@ -25,10 +25,10 @@ Contract {
       consent_given: Boolean = false,
       consent_timestamp: ISO8601,
       retention_days: Integer = 365,
-      data_categories: Array,
+      data_categories: Array<String>,
       deletion_requested: Boolean = false,
       deletion_deadline: ISO8601,
-      audit_log: Array
+      audit_log: Array<String>
     },
     invariants: [
       "retention_days > 0",
@@ -45,7 +45,7 @@ Contract {
         precondition: "consent_given == false",
         parameters: {
           subject_id: String,
-          categories: Array
+          categories: Array<String>
         },
         postcondition: "consent_given == true and consent_timestamp is set",
         side_effects: ["log_consent_event", "notify_controller"],

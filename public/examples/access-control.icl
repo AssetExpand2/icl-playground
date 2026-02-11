@@ -23,13 +23,13 @@ Contract {
     state: {
       user_id: String,
       role: String = "viewer",
-      permissions: Array,
+      permissions: Array<String>,
       session_active: Boolean = false,
       session_expiry: ISO8601,
       failed_attempts: Integer = 0,
       locked: Boolean = false,
       last_access: ISO8601,
-      audit_trail: Array
+      audit_trail: Array<String>
     },
     invariants: [
       "failed_attempts >= 0",

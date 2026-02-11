@@ -246,4 +246,4 @@
   - If parse fails, show inline error "Contract must parse successfully first"
   - Single operation → auto-fills JSON editor
   - Multiple operations → dropdown picker to choose which operation
-- [ ] Commit and push
+- [x] Commit and push

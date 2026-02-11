@@ -23,7 +23,7 @@ Contract {
     state: {
       device_id: String,
       current_temp: Float = 0.0,
-      min_threshold: Float = -10.0,
+      min_threshold: Float = 0.0,
       max_threshold: Float = 45.0,
       alert_active: Boolean = false,
       reading_count: Integer = 0,
