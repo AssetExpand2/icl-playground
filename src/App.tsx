@@ -10,6 +10,7 @@ import { ExamplePicker } from './components/ExamplePicker'
 import { StatusBar } from './components/StatusBar'
 import { SplitPane } from './components/SplitPane'
 import { WelcomeOverlay } from './components/WelcomeOverlay'
+import { GuidedTour } from './components/GuidedTour'
 import { EXAMPLE_CONTRACTS } from './icl/types'
 import type { PipelineAction } from './icl/types'
 import './App.css'
@@ -28,6 +29,7 @@ function App() {
   const [cursorPosition, setCursorPosition] = useState({ line: 1, column: 1 })
   const editorRef = useRef<IclEditorHandle>(null)
   const [copied, setCopied] = useState(false)
+  const [tourActive, setTourActive] = useState(false)
 
   const dirty = source !== loadedSource && source.trim() !== ''
 
@@ -90,6 +92,7 @@ function App() {
     <ThemeContext.Provider value={themeCtx}>
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
       <WelcomeOverlay />
+      <GuidedTour active={tourActive} onFinish={() => setTourActive(false)} />
       {/* Header */}
       <header className="border-b border-gray-800 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -99,6 +102,16 @@ function App() {
           <ExamplePicker dirty={dirty} onSelect={handleExampleSelect} />
         </div>
         <div className="flex items-center gap-3">
+          {/* Help tour button */}
+          <button
+            onClick={() => setTourActive(true)}
+            className="p-1.5 rounded text-gray-400 hover:text-gray-100 hover:bg-gray-800 transition-colors"
+            title="Start guided tour"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
           {/* Share button */}
           <button
             onClick={handleShare}

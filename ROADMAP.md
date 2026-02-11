@@ -206,10 +206,10 @@
 
 ### 7.3 — Interactive Guided Tour
 
-- [ ] Step-by-step tooltip tour: Editor → Parse → AST Tree → Normalize → Verify → Hash
-- [ ] Each step highlights the relevant UI area with a pulsing border
-- [ ] "Next" / "Skip" buttons to advance or dismiss
-- [ ] Triggered by "?" help button in header (always accessible)
+- [x] Step-by-step tooltip tour: Editor → Parse → AST Tree → Normalize → Verify → Hash
+- [x] Each step highlights the relevant UI area with a pulsing border
+- [x] "Next" / "Skip" buttons to advance or dismiss
+- [x] Triggered by "?" help button in header (always accessible)
 - [ ] Commit and push
 
 ### 7.4 — ICL Quick Reference Panel

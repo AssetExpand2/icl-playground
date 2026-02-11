@@ -66,6 +66,7 @@ export function Toolbar({ wasmReady, loading, activeAction, onAction }: ToolbarP
           return (
             <button
               key={action}
+              data-tour={`toolbar-${action}`}
               onClick={() => {
                 if (action !== 'format') {
                   onAction(action);

@@ -230,7 +230,7 @@ export const IclEditor = forwardRef<IclEditorHandle, IclEditorProps>(
     }, []);
 
     return (
-      <div className="relative h-full">
+      <div className="relative h-full" data-tour="editor">
         {/* Placeholder overlay when editor is empty */}
         {!value?.trim() && (
           <div className="absolute inset-0 pointer-events-none z-10 flex items-start px-16 pt-14">

@@ -149,6 +149,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
         {GROUPS.map(({ id, label, icon }) => (
           <button
             key={id}
+            data-tour={`group-${id}`}
             onClick={() => handleGroupSwitch(id)}
             className={`
               px-3 py-1 text-xs font-semibold rounded-t transition-colors
@@ -176,6 +177,7 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
         {visibleTabs.map(({ id, label }) => (
           <button
             key={id}
+            data-tour={`tab-${id}`}
             onClick={() => setActiveTab(id)}
             className={`
               px-3 py-1.5 text-sm font-medium transition-colors
