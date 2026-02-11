@@ -175,20 +175,20 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
             <div className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="inline-block w-2 h-2 rounded-full bg-red-500" />
-                <span className="text-sm font-medium text-red-400">Execution Failed</span>
+                <span className="text-sm font-medium text-red-700 dark:text-red-400">Execution Failed</span>
               </div>
               <div className="relative">
                 <div className="absolute top-2 right-2 z-10">
                   <CopyButton text={result.error} />
                 </div>
-                <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3 pr-20">
+                <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3 pr-20">
                   {result.error}
                 </pre>
               </div>
 
               {/* Help: what to do */}
-              <div className="mt-4 rounded border border-amber-800/40 bg-amber-950/20 p-3">
-                <p className="text-xs font-semibold text-amber-400 mb-1.5">How to fix this</p>
+              <div className="mt-4 rounded border border-amber-400 dark:border-amber-800/40 bg-amber-100 dark:bg-amber-950/20 p-3">
+                <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1.5">How to fix this</p>
                 <p className="text-xs text-gray-400 mb-2">
                   Make sure your input JSON has an <code className="text-amber-300 bg-gray-800/50 px-1 rounded">"operation"</code> field
                   matching a name from the contract's <strong className="text-gray-300">BehavioralSemantics → operations</strong>,
@@ -210,7 +210,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
               {/* Success header */}
               <div className="flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-sm font-medium text-green-400">Execution Succeeded</span>
+                <span className="text-sm font-medium text-green-700 dark:text-green-400">Execution Succeeded</span>
               </div>
 
               {/* Result section */}
@@ -231,7 +231,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
                     <div className="space-y-1">
                       {sections.postconditions.map((pc: { name?: string; passed?: boolean; message?: string }, i: number) => (
                         <div key={i} className="flex items-center gap-2 text-sm font-mono">
-                          <span className={pc.passed ? 'text-green-400' : 'text-red-400'}>
+                          <span className={pc.passed ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}>
                             {pc.passed ? '✓' : '✕'}
                           </span>
                           <span className="text-gray-300">
@@ -280,7 +280,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
             <div className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-sm font-medium text-green-400">Execution Succeeded</span>
+                <span className="text-sm font-medium text-green-700 dark:text-green-400">Execution Succeeded</span>
               </div>
               <div className="relative">
                 <div className="absolute top-2 right-2 z-10">
@@ -301,9 +301,9 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
 // --- Helpers ---
 
 const SECTION_COLORS: Record<string, string> = {
-  green: 'border-green-800 bg-green-950/20',
-  blue: 'border-blue-800 bg-blue-950/20',
-  purple: 'border-purple-800 bg-purple-950/20',
+  green: 'border-green-400 dark:border-green-800 bg-green-100 dark:bg-green-950/20',
+  blue: 'border-blue-400 dark:border-blue-800 bg-blue-100 dark:bg-blue-950/20',
+  purple: 'border-purple-400 dark:border-purple-800 bg-purple-100 dark:bg-purple-950/20',
   gray: 'border-gray-700 bg-gray-800/30',
 };
 

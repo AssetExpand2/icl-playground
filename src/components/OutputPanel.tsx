@@ -308,7 +308,7 @@ function ResultTab({ result }: { result: IclResult }) {
           <div className="absolute top-2 right-2 z-10">
             <CopyButton text={result.error} />
           </div>
-          <pre className="text-sm text-red-400 whitespace-pre-wrap font-mono bg-red-950/30 rounded p-3 pr-20">
+          <pre className="text-sm text-red-700 dark:text-red-400 whitespace-pre-wrap font-mono bg-red-100 dark:bg-red-950/30 rounded p-3 pr-20">
             {result.error}
           </pre>
         </div>
@@ -351,16 +351,16 @@ function ErrorsTab({
           disabled={!err.line}
           className={`
             w-full text-left p-3 rounded text-sm
-            bg-red-950/20 border border-red-900/30
-            ${err.line ? 'hover:bg-red-950/40 cursor-pointer' : 'cursor-default'}
+            bg-red-100 dark:bg-red-950/20 border border-red-300 dark:border-red-900/30
+            ${err.line ? 'hover:bg-red-200 dark:hover:bg-red-950/40 cursor-pointer' : 'cursor-default'}
           `}
         >
           <div className="flex items-start gap-2">
-            <span className="text-red-500 shrink-0">✕</span>
+            <span className="text-red-600 dark:text-red-500 shrink-0">✕</span>
             <div>
-              <p className="text-red-300 font-mono text-xs">{err.message}</p>
+              <p className="text-red-800 dark:text-red-300 font-mono text-xs">{err.message}</p>
               {err.line && (
-                <p className="text-red-500/70 text-xs mt-1">
+                <p className="text-red-600/70 dark:text-red-500/70 text-xs mt-1">
                   Line {err.line}
                   {err.column ? `, Column ${err.column}` : ''}
                   {' — click to jump'}

@@ -149,8 +149,8 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
       </div>
 
       {error && (
-        <div className="px-3 py-2 bg-red-950/30 border-b border-red-900/30">
-          <p className="text-sm text-red-400">{error}</p>
+        <div className="px-3 py-2 bg-red-100 dark:bg-red-950/30 border-b border-red-300 dark:border-red-900/30">
+          <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
         </div>
       )}
 
@@ -227,9 +227,9 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
                 key={i}
                 className={`px-3 py-0.5 flex ${
                   line.type === 'added'
-                    ? 'bg-green-950/30 text-green-400'
+                    ? 'bg-green-100 dark:bg-green-950/30 text-green-800 dark:text-green-400'
                     : line.type === 'removed'
-                      ? 'bg-red-950/30 text-red-400'
+                      ? 'bg-red-100 dark:bg-red-950/30 text-red-800 dark:text-red-400'
                       : 'text-gray-500'
                 }`}
               >

@@ -13,14 +13,14 @@ interface NodeStyle {
 }
 
 const SECTION_STYLES: Record<string, NodeStyle> = {
-  Contract:              { icon: '📜', color: 'text-purple-400' },
-  Identity:              { icon: '🆔', color: 'text-blue-400' },
-  PurposeStatement:      { icon: '🎯', color: 'text-green-400' },
-  DataSemantics:         { icon: '📊', color: 'text-cyan-400' },
-  BehavioralSemantics:   { icon: '⚙️', color: 'text-yellow-400' },
-  ExecutionConstraints:  { icon: '🔒', color: 'text-red-400' },
-  HumanMachineContract:  { icon: '🤝', color: 'text-pink-400' },
-  Extensions:            { icon: '🧩', color: 'text-orange-400' },
+  Contract:              { icon: '📜', color: 'text-purple-700 dark:text-purple-400' },
+  Identity:              { icon: '🆔', color: 'text-blue-700 dark:text-blue-400' },
+  PurposeStatement:      { icon: '🎯', color: 'text-green-700 dark:text-green-400' },
+  DataSemantics:         { icon: '📊', color: 'text-cyan-700 dark:text-cyan-400' },
+  BehavioralSemantics:   { icon: '⚙️', color: 'text-yellow-700 dark:text-yellow-400' },
+  ExecutionConstraints:  { icon: '🔒', color: 'text-red-700 dark:text-red-400' },
+  HumanMachineContract:  { icon: '🤝', color: 'text-pink-700 dark:text-pink-400' },
+  Extensions:            { icon: '🧩', color: 'text-orange-700 dark:text-orange-400' },
 };
 
 function getNodeStyle(key: string): NodeStyle {
@@ -195,24 +195,24 @@ function PrimitiveValue({ value }: { value: string | number | boolean | null }) 
     return <span className="text-gray-600 italic">null</span>;
   }
   if (typeof value === 'boolean') {
-    return <span className="text-blue-400">{String(value)}</span>;
+    return <span className="text-blue-700 dark:text-blue-400">{String(value)}</span>;
   }
   if (typeof value === 'number') {
-    return <span className="text-green-400">{value}</span>;
+    return <span className="text-green-700 dark:text-green-400">{value}</span>;
   }
   // String
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
   const isTimestamp = /^\d{4}-\d{2}-\d{2}T/.test(value);
 
   if (isUuid) {
-    return <span className="text-yellow-400" title="UUID">{`"${value}"`}</span>;
+    return <span className="text-yellow-700 dark:text-yellow-400" title="UUID">{`"${value}"`}</span>;
   }
   if (isTimestamp) {
-    return <span className="text-yellow-300" title="ISO8601">{`"${value}"`}</span>;
+    return <span className="text-amber-700 dark:text-yellow-300" title="ISO8601">{`"${value}"`}</span>;
   }
   // Truncate long strings
   const display = value.length > 80 ? value.slice(0, 77) + '...' : value;
-  return <span className="text-orange-300">{`"${display}"`}</span>;
+  return <span className="text-orange-700 dark:text-orange-300">{`"${display}"`}</span>;
 }
 
 // --- Helpers ---

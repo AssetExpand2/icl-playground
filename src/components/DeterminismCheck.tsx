@@ -107,8 +107,8 @@ export function DeterminismCheck({ source }: DeterminismCheckProps) {
       {/* Results */}
       <div className="flex-1 overflow-auto p-4">
         {error && (
-          <div className="p-3 rounded bg-red-950/30 border border-red-900/30 mb-4">
-            <p className="text-sm text-red-400 font-mono">{error}</p>
+          <div className="p-3 rounded bg-red-100 dark:bg-red-950/30 border border-red-300 dark:border-red-900/30 mb-4">
+            <p className="text-sm text-red-700 dark:text-red-400 font-mono">{error}</p>
           </div>
         )}
 
@@ -125,8 +125,8 @@ export function DeterminismCheck({ source }: DeterminismCheckProps) {
             {/* Verdict */}
             <div className={`p-4 rounded-lg border ${
               result.allIdentical
-                ? 'bg-green-950/20 border-green-800'
-                : 'bg-red-950/20 border-red-800'
+                ? 'bg-green-100 dark:bg-green-950/20 border-green-400 dark:border-green-800'
+                : 'bg-red-100 dark:bg-red-950/20 border-red-400 dark:border-red-800'
             }`}>
               <div className="flex items-center gap-3">
                 <span className="text-3xl">
@@ -134,7 +134,7 @@ export function DeterminismCheck({ source }: DeterminismCheckProps) {
                 </span>
                 <div>
                   <p className={`text-lg font-bold ${
-                    result.allIdentical ? 'text-green-400' : 'text-red-400'
+                    result.allIdentical ? 'text-green-800 dark:text-green-400' : 'text-red-800 dark:text-red-400'
                   }`}>
                     {result.allIdentical ? 'DETERMINISTIC' : 'NON-DETERMINISTIC'}
                   </p>
@@ -163,12 +163,12 @@ export function DeterminismCheck({ source }: DeterminismCheckProps) {
 
             {/* Unique hashes (only show if mismatch) */}
             {!result.allIdentical && (
-              <div className="p-3 rounded bg-red-950/20 border border-red-900/30">
-                <p className="text-xs text-red-500 mb-1.5">
+              <div className="p-3 rounded bg-red-100 dark:bg-red-950/20 border border-red-300 dark:border-red-900/30">
+                <p className="text-xs text-red-600 dark:text-red-500 mb-1.5">
                   Unique hashes ({new Set(result.hashes).size}):
                 </p>
                 {[...new Set(result.hashes)].map((h, i) => (
-                  <p key={i} className="text-xs font-mono text-red-300 break-all">
+                  <p key={i} className="text-xs font-mono text-red-800 dark:text-red-300 break-all">
                     {h}
                   </p>
                 ))}
