@@ -149,7 +149,7 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
               language="json"
               value={inputJson}
               onChange={(v) => setInputJson(v ?? '{}')}
-              theme={theme === 'dark' ? 'vs-dark' : 'vs'}
+              theme={theme === 'dark' ? 'icl-dark' : 'icl-light'}
               options={{
                 minimap: { enabled: false },
                 fontSize: 12,

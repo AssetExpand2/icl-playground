@@ -11,9 +11,9 @@ import { CopyButton } from './CopyButton';
 
 // --- Tab Definitions ---
 
-type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute' | 'export' | 'help';
+type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute' | 'export';
 
-type GroupId = 'output' | 'tools';
+type GroupId = 'output' | 'tools' | 'help';
 
 interface TabDef {
   id: TabId;
@@ -30,6 +30,7 @@ interface GroupDef {
 const GROUPS: GroupDef[] = [
   { id: 'output', label: 'Output', icon: '⎙' },
   { id: 'tools', label: 'Tools', icon: '⚙' },
+  { id: 'help', label: 'Help', icon: '?' },
 ];
 
 const TABS: TabDef[] = [
@@ -44,7 +45,6 @@ const TABS: TabDef[] = [
   { id: 'diff', label: 'Diff', group: 'tools' },
   { id: 'execute', label: 'Execute', group: 'tools' },
   { id: 'export', label: 'Export', group: 'tools' },
-  { id: 'help', label: 'Help', group: 'tools' },
 ];
 
 // --- Error Parsing ---
@@ -110,7 +110,7 @@ interface OutputPanelProps {
 }
 
 // Default tab per group so switching groups lands on something sensible
-const DEFAULT_TAB: Record<GroupId, TabId> = {
+const DEFAULT_TAB: Partial<Record<GroupId, TabId>> = {
   output: 'result',
   tools: 'pipeline',
 };
@@ -127,10 +127,12 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
   const handleGroupSwitch = useCallback(
     (group: GroupId) => {
       setActiveGroup(group);
+      // Help group has no sub-tabs
+      if (group === 'help') return;
       // If current tab isn't in the new group, switch to the group default
       const tabsInGroup = TABS.filter((t) => t.group === group);
       if (!tabsInGroup.some((t) => t.id === activeTab)) {
-        setActiveTab(DEFAULT_TAB[group]);
+        setActiveTab(DEFAULT_TAB[group]!);
       }
     },
     [activeTab],
@@ -175,7 +177,8 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
         )}
       </div>
 
-      {/* Tab bar — only tabs for active group */}
+      {/* Tab bar — only tabs for active group (hidden for help) */}
+      {activeGroup !== 'help' && (
       <div className="flex border-b border-gray-800 bg-gray-900/80 px-1">
         {visibleTabs.map(({ id, label }) => (
           <button
@@ -199,9 +202,14 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
           </button>
         ))}
       </div>
+      )}
 
       {/* Tab content */}
-      {activeTab === 'execute' ? (
+      {activeGroup === 'help' ? (
+        <div className="flex-1 overflow-auto p-4">
+          <HelpPanel />
+        </div>
+      ) : activeTab === 'execute' ? (
         <div className="flex-1 min-h-0 overflow-hidden">
           <ExecutionPanel source={source} />
         </div>
@@ -217,8 +225,6 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
           <ExportPanel source={source} lastOutput={result?.output} />
         ) : activeTab === 'pipeline' ? (
           <PipelineView source={source} />
-        ) : activeTab === 'help' ? (
-          <HelpPanel />
         ) : !result ? (
           <TabHint tab={activeTab} />
         ) : activeTab === 'result' ? (

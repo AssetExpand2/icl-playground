@@ -141,8 +141,8 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
 
         {stats && (
           <div className="flex items-center gap-3 text-xs ml-auto">
-            <span className="text-green-400">+{stats.added} added</span>
-            <span className="text-red-400">-{stats.removed} removed</span>
+            <span className="text-green-700 dark:text-green-400">+{stats.added} added</span>
+            <span className="text-red-700 dark:text-red-400">-{stats.removed} removed</span>
             <span className="text-gray-500">{stats.same} unchanged</span>
           </div>
         )}
@@ -156,8 +156,8 @@ export function ContractDiff({ initialLeft }: ContractDiffProps) {
 
       {/* Contextual hint — shown when no diff has been run */}
       {!stats && !error && (
-        <div className="px-3 py-2 bg-blue-950/20 border-b border-blue-900/20">
-          <p className="text-xs text-blue-400/80">
+        <div className="px-3 py-2 bg-blue-100 dark:bg-blue-950/20 border-b border-blue-300 dark:border-blue-900/20">
+          <p className="text-xs text-blue-800 dark:text-blue-400/80">
             <strong>Normalization-based diff:</strong> Both contracts are normalized to canonical form before comparison, so superficial
             differences (whitespace, key order) are ignored — only semantic changes are shown.
           </p>

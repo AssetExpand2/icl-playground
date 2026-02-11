@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { usePipeline } from '../hooks/usePipeline';
 import type { StageResult, PipelineStage } from '../hooks/usePipeline';
+import { CopyButton } from './CopyButton';
 
 // --- Stage Display Config ---
 
@@ -102,11 +103,11 @@ function StageChip({ stage }: { stage: StageResult }) {
 
   const bgColor =
     stage.status === 'success'
-      ? 'bg-green-900/30 border-green-800 text-green-300'
+      ? 'bg-green-100 dark:bg-green-900/30 border-green-400 dark:border-green-800 text-green-800 dark:text-green-300'
       : stage.status === 'error'
-        ? 'bg-red-900/30 border-red-800 text-red-300'
+        ? 'bg-red-100 dark:bg-red-900/30 border-red-400 dark:border-red-800 text-red-800 dark:text-red-300'
         : stage.status === 'running'
-          ? 'bg-blue-900/30 border-blue-800 text-blue-300 animate-pulse'
+          ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-400 dark:border-blue-800 text-blue-800 dark:text-blue-300 animate-pulse'
           : 'bg-gray-800/50 border-gray-700 text-gray-500';
 
   return (
@@ -132,11 +133,11 @@ function StageOutput({ stage }: { stage: StageResult }) {
       {/* Header */}
       <div className={`px-3 py-2 flex items-center gap-2 text-sm font-medium ${
         stage.status === 'success'
-          ? 'bg-green-950/20 text-green-400'
+          ? 'bg-green-50 dark:bg-green-950/20 text-green-800 dark:text-green-400'
           : stage.status === 'error'
-            ? 'bg-red-950/20 text-red-400'
+            ? 'bg-red-50 dark:bg-red-950/20 text-red-800 dark:text-red-400'
             : stage.status === 'running'
-              ? 'bg-blue-950/20 text-blue-400'
+              ? 'bg-blue-50 dark:bg-blue-950/20 text-blue-800 dark:text-blue-400'
               : 'bg-gray-900 text-gray-500'
       }`}>
         <span>{config.icon}</span>
@@ -151,15 +152,25 @@ function StageOutput({ stage }: { stage: StageResult }) {
 
       {/* Body */}
       {stage.status === 'error' && stage.error && (
-        <pre className="p-3 text-xs text-red-400 font-mono whitespace-pre-wrap bg-gray-950/50 max-h-40 overflow-auto">
-          {stage.error}
-        </pre>
+        <div className="relative">
+          <div className="absolute top-2 right-2 z-10">
+            <CopyButton text={stage.error} />
+          </div>
+          <pre className="p-3 text-xs text-red-600 dark:text-red-400 font-mono whitespace-pre-wrap bg-red-50 dark:bg-gray-950/50 max-h-40 overflow-auto pr-12">
+            {stage.error}
+          </pre>
+        </div>
       )}
 
       {stage.status === 'success' && stage.output && (
-        <pre className="p-3 text-xs text-gray-400 font-mono whitespace-pre-wrap bg-gray-950/50 max-h-40 overflow-auto">
-          {formatStageOutput(stage.output)}
-        </pre>
+        <div className="relative">
+          <div className="absolute top-2 right-2 z-10">
+            <CopyButton text={formatStageOutput(stage.output)} />
+          </div>
+          <pre className="p-3 text-xs text-gray-700 dark:text-gray-400 font-mono whitespace-pre-wrap bg-gray-50 dark:bg-gray-950/50 max-h-40 overflow-auto pr-12">
+            {formatStageOutput(stage.output)}
+          </pre>
+        </div>
       )}
     </div>
   );
