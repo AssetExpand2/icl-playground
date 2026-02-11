@@ -86,8 +86,19 @@ export function ExamplePicker({ dirty, onSelect }: ExamplePickerProps) {
               className="w-full text-left px-3 py-2.5 hover:bg-gray-700/50 transition-colors
                 border-b border-gray-700/50 last:border-b-0"
             >
-              <div className="text-sm font-medium text-gray-200">
-                {example.name}
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-200">
+                <span>{example.name}</span>
+                <span
+                  className={`px-1.5 py-0.5 text-[10px] rounded-full font-medium uppercase tracking-wider ${
+                    example.complexity === 'beginner'
+                      ? 'bg-green-900/40 text-green-400'
+                      : example.complexity === 'intermediate'
+                        ? 'bg-yellow-900/40 text-yellow-400'
+                        : 'bg-red-900/40 text-red-400'
+                  }`}
+                >
+                  {example.complexity}
+                </span>
               </div>
               <div className="text-xs text-gray-500 mt-0.5">
                 {example.description}

@@ -202,7 +202,7 @@
 - [x] Execute tab: explain `{"operation": "...", "inputs": {...}}` format visually
 - [x] Diff tab: explain what normalization-based diffing means
 - [x] Determinism tab: explain what deterministic hashing proves
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 7.3 — Interactive Guided Tour
 
@@ -210,7 +210,7 @@
 - [x] Each step highlights the relevant UI area with a pulsing border
 - [x] "Next" / "Skip" buttons to advance or dismiss
 - [x] Triggered by "?" help button in header (always accessible)
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 7.4 — ICL Quick Reference Panel
 
@@ -221,11 +221,11 @@
   - Input format for Execute (`operation` + `inputs` explained)
   - Links to full docs (ICL-Docs, ICL-Spec)
 - [x] Searchable / filterable
-- [ ] Commit and push
+- [x] Commit and push
 
 ### 7.5 — Improved Example Contracts
 
-- [ ] Add 2-3 more examples covering different use cases (data governance, IoT, access control)
-- [ ] Each example includes header comments explaining what it demonstrates
-- [ ] Example picker shows a "complexity" badge (beginner / intermediate / advanced)
+- [x] Add 2-3 more examples covering different use cases (data governance, IoT, access control)
+- [x] Each example includes header comments explaining what it demonstrates
+- [x] Example picker shows a "complexity" badge (beginner / intermediate / advanced)
 - [ ] Commit and push
