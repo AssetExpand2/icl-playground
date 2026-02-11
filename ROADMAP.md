@@ -1,7 +1,7 @@
 # ICL Playground — Roadmap & Progress Tracker
 
 **Started:** 2026-02-10
-**Status:** Phase 6 — In Progress
+**Status:** Phase 8 — In Progress
 
 > Check boxes as each step is completed. Each phase must be finished before starting the next.
 
@@ -229,3 +229,21 @@
 - [x] Each example includes header comments explaining what it demonstrates
 - [x] Example picker shows a "complexity" badge (beginner / intermediate / advanced)
 - [x] Commit and push
+
+---
+
+## Phase 8: Execute UX Improvements
+
+### 8.1 — Generate Template from Contract
+
+- [x] Create `src/icl/templateGenerator.ts` helper that:
+  - Parses contract source → extracts `BehavioralSemantics.operations`
+  - For each operation, extracts `name` and `parameters` with types
+  - Generates JSON template with `{"operation": "<name>", "inputs": {<param>: <placeholder>}}`
+  - Type placeholders: `"<String>"` for String, `0` for Integer/Float, `false` for Boolean, `"2026-01-01T00:00:00Z"` for ISO8601, `"00000000-0000-0000-0000-000000000000"` for UUID, `[]` for Array, `{}` for Map/Object
+- [x] Add "Generate Template" button in ExecutionPanel controls bar
+  - Parses current source on click (parse is sufficient — no verify needed)
+  - If parse fails, show inline error "Contract must parse successfully first"
+  - Single operation → auto-fills JSON editor
+  - Multiple operations → dropdown picker to choose which operation
+- [ ] Commit and push

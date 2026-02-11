@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { useTheme } from '../hooks/useTheme';
 import {
@@ -6,6 +6,8 @@ import {
   isInitialized,
   execute,
 } from '../icl/runtime';
+import { extractOperations, generateTemplate } from '../icl/templateGenerator';
+import type { OperationInfo } from '../icl/templateGenerator';
 import { CopyButton } from './CopyButton';
 
 // --- Types ---
@@ -30,6 +32,54 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
   );
   const [result, setResult] = useState<ExecutionResult | null>(null);
   const [running, setRunning] = useState(false);
+
+  // Template generation state
+  const [operations, setOperations] = useState<OperationInfo[]>([]);
+  const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
+  const [showOpPicker, setShowOpPicker] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!showOpPicker) return;
+    const handler = (e: MouseEvent) => {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setShowOpPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showOpPicker]);
+
+  const handleGenerate = useCallback(async () => {
+    if (generating || !source.trim()) return;
+    setGenerating(true);
+    setGenError(null);
+
+    const res = await extractOperations(source);
+    if (!res.success) {
+      setGenError(res.error);
+      setGenerating(false);
+      return;
+    }
+
+    setOperations(res.operations);
+    if (res.operations.length === 1) {
+      // Single operation → auto-fill
+      setInputJson(generateTemplate(res.operations[0]));
+      setShowOpPicker(false);
+    } else {
+      // Multiple operations → show picker
+      setShowOpPicker(true);
+    }
+    setGenerating(false);
+  }, [source, generating]);
+
+  const handlePickOperation = useCallback((op: OperationInfo) => {
+    setInputJson(generateTemplate(op));
+    setShowOpPicker(false);
+  }, []);
 
   const handleExecute = useCallback(async () => {
     if (running || !source.trim()) return;
@@ -124,6 +174,58 @@ export function ExecutionPanel({ source }: ExecutionPanelProps) {
             </>
           )}
         </button>
+
+        {/* Generate Template */}
+        <div className="relative" ref={pickerRef}>
+          <button
+            onClick={handleGenerate}
+            disabled={generating || !source.trim()}
+            title="Parse contract and generate a JSON input template"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium
+              bg-gray-800 text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-gray-50 hover:border-gray-600
+              disabled:opacity-50 disabled:cursor-not-allowed transition-colors active:scale-[0.97]"
+          >
+            {generating ? (
+              <span className="flex items-center gap-1.5">
+                <span className="animate-spin">⟳</span>
+                Parsing...
+              </span>
+            ) : (
+              <>
+                <span>⎘</span>
+                <span>Generate Template</span>
+              </>
+            )}
+          </button>
+
+          {/* Multi-operation picker dropdown */}
+          {showOpPicker && operations.length > 1 && (
+            <div className="absolute top-full left-0 mt-1 z-50 bg-gray-800 border border-gray-700 rounded shadow-lg min-w-[200px]">
+              <div className="px-3 py-1.5 text-xs text-gray-500 border-b border-gray-700">
+                Choose an operation ({operations.length} found)
+              </div>
+              {operations.map((op) => (
+                <button
+                  key={op.name}
+                  onClick={() => handlePickOperation(op)}
+                  className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-gray-50
+                    transition-colors flex items-center justify-between gap-2"
+                >
+                  <span className="font-mono">{op.name}</span>
+                  <span className="text-xs text-gray-500">
+                    {Object.keys(op.parameters).length} param{Object.keys(op.parameters).length !== 1 ? 's' : ''}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {genError && (
+          <span className="text-xs text-red-700 dark:text-red-400 truncate max-w-[200px]" title={genError}>
+            ✕ {genError}
+          </span>
+        )}
 
         {result && (
           <span className="text-xs text-gray-500 ml-auto">
