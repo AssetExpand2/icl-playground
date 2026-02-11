@@ -214,13 +214,13 @@
 
 ### 7.4 — ICL Quick Reference Panel
 
-- [ ] New "Help" tab in OutputPanel with collapsible sections:
+- [x] New "Help" tab in OutputPanel with collapsible sections:
   - What is ICL? (2-paragraph summary)
   - Contract structure (all 7 sections with 1-line descriptions)
   - Pipeline stages explained (Parse → Normalize → Verify → Hash → Execute)
   - Input format for Execute (`operation` + `inputs` explained)
   - Links to full docs (ICL-Docs, ICL-Spec)
-- [ ] Searchable / filterable
+- [x] Searchable / filterable
 - [ ] Commit and push
 
 ### 7.5 — Improved Example Contracts
