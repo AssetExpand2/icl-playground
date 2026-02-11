@@ -177,11 +177,11 @@
 
 ### 6.1 — Tab Grouping
 
-- [ ] Group OutputPanel tabs into sections: **Output** (Result, Errors, AST Tree, AST JSON) and **Tools** (Pipeline, Determinism, Diff, Execute, Export)
-- [ ] Section switcher bar above tabs (two clickable group labels)
-- [ ] Only show tabs for the active group — eliminates overflow
-- [ ] Persist active group in component state
-- [ ] Responsive: works on narrow screens without scroll
+- [x] Group OutputPanel tabs into sections: **Output** (Result, Errors, AST Tree, AST JSON) and **Tools** (Pipeline, Determinism, Diff, Execute, Export)
+- [x] Section switcher bar above tabs (two clickable group labels)
+- [x] Only show tabs for the active group — eliminates overflow
+- [x] Persist active group in component state
+- [x] Responsive: works on narrow screens without scroll
 - [ ] Commit and push
 
 ---

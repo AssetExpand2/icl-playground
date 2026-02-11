@@ -11,21 +11,37 @@ import { ExportPanel } from './ExportPanel';
 
 type TabId = 'result' | 'errors' | 'ast-tree' | 'ast' | 'pipeline' | 'determinism' | 'diff' | 'execute' | 'export';
 
+type GroupId = 'output' | 'tools';
+
 interface TabDef {
   id: TabId;
   label: string;
+  group: GroupId;
 }
 
+interface GroupDef {
+  id: GroupId;
+  label: string;
+  icon: string;
+}
+
+const GROUPS: GroupDef[] = [
+  { id: 'output', label: 'Output', icon: '⎙' },
+  { id: 'tools', label: 'Tools', icon: '⚙' },
+];
+
 const TABS: TabDef[] = [
-  { id: 'result', label: 'Result' },
-  { id: 'errors', label: 'Errors' },
-  { id: 'ast-tree', label: 'AST Tree' },
-  { id: 'ast', label: 'AST JSON' },
-  { id: 'pipeline', label: 'Pipeline' },
-  { id: 'determinism', label: 'Determinism' },
-  { id: 'diff', label: 'Diff' },
-  { id: 'execute', label: 'Execute' },
-  { id: 'export', label: 'Export' },
+  // Output group
+  { id: 'result', label: 'Result', group: 'output' },
+  { id: 'errors', label: 'Errors', group: 'output' },
+  { id: 'ast-tree', label: 'AST Tree', group: 'output' },
+  { id: 'ast', label: 'AST JSON', group: 'output' },
+  // Tools group
+  { id: 'pipeline', label: 'Pipeline', group: 'tools' },
+  { id: 'determinism', label: 'Determinism', group: 'tools' },
+  { id: 'diff', label: 'Diff', group: 'tools' },
+  { id: 'execute', label: 'Execute', group: 'tools' },
+  { id: 'export', label: 'Export', group: 'tools' },
 ];
 
 // --- Error Parsing ---
@@ -90,11 +106,32 @@ interface OutputPanelProps {
   onGoToLine?: (line: number, column?: number) => void;
 }
 
+// Default tab per group so switching groups lands on something sensible
+const DEFAULT_TAB: Record<GroupId, TabId> = {
+  output: 'result',
+  tools: 'pipeline',
+};
+
 export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
+  const [activeGroup, setActiveGroup] = useState<GroupId>('output');
   const [activeTab, setActiveTab] = useState<TabId>('result');
 
   const errors = result ? parseErrors(result) : [];
   const errorCount = errors.length;
+
+  const visibleTabs = TABS.filter((t) => t.group === activeGroup);
+
+  const handleGroupSwitch = useCallback(
+    (group: GroupId) => {
+      setActiveGroup(group);
+      // If current tab isn't in the new group, switch to the group default
+      const tabsInGroup = TABS.filter((t) => t.group === group);
+      if (!tabsInGroup.some((t) => t.id === activeTab)) {
+        setActiveTab(DEFAULT_TAB[group]);
+      }
+    },
+    [activeTab],
+  );
 
   const handleErrorClick = useCallback(
     (error: ParsedError) => {
@@ -107,14 +144,41 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Tab bar */}
-      <div className="flex border-b border-gray-800 bg-gray-900/80">
-        {TABS.map(({ id, label }) => (
+      {/* Group switcher */}
+      <div className="flex items-center gap-1 px-2 pt-1.5 pb-0 bg-gray-900/80">
+        {GROUPS.map(({ id, label, icon }) => (
+          <button
+            key={id}
+            onClick={() => handleGroupSwitch(id)}
+            className={`
+              px-3 py-1 text-xs font-semibold rounded-t transition-colors
+              ${activeGroup === id
+                ? 'bg-gray-800 text-gray-50'
+                : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/50'
+              }
+            `}
+          >
+            <span className="mr-1">{icon}</span>
+            {label}
+          </button>
+        ))}
+
+        {/* Duration badge — always visible */}
+        {result && (
+          <span className="ml-auto px-2 text-xs text-gray-600">
+            {result.durationMs.toFixed(1)}ms
+          </span>
+        )}
+      </div>
+
+      {/* Tab bar — only tabs for active group */}
+      <div className="flex border-b border-gray-800 bg-gray-900/80 px-1">
+        {visibleTabs.map(({ id, label }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}
             className={`
-              px-4 py-2 text-sm font-medium transition-colors
+              px-3 py-1.5 text-sm font-medium transition-colors
               ${activeTab === id
                 ? 'text-gray-50 border-b-2 border-blue-500'
                 : 'text-gray-500 hover:text-gray-300'
@@ -129,13 +193,6 @@ export function OutputPanel({ result, source, onGoToLine }: OutputPanelProps) {
             )}
           </button>
         ))}
-
-        {/* Duration badge */}
-        {result && (
-          <span className="ml-auto px-3 py-2 text-xs text-gray-600">
-            {result.durationMs.toFixed(1)}ms
-          </span>
-        )}
       </div>
 
       {/* Tab content */}
