@@ -4,6 +4,7 @@
 
 [![Live Demo](https://img.shields.io/badge/demo-icl--playground.vercel.app-blue)](https://icl-playground.vercel.app)
 [![Built with](https://img.shields.io/badge/built_with-icl--runtime_WASM-green)](https://www.npmjs.com/package/icl-runtime)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **[Try it live →](https://icl-playground.vercel.app)**
 
