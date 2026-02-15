@@ -12,7 +12,7 @@
 ### 0.1 — Initialize Repository
 
 - [x] Create GitHub repo (`icl-playground`) under personal account, public
-- [x] Clone locally to `/home/opeworld/Documents/RobustBrains/icl-playground/`
+- [x] Clone locally
 - [x] Initialize Vite + React + TypeScript (`npm create vite@latest`)
 - [x] Install Tailwind CSS
 - [x] Install Monaco Editor (`@monaco-editor/react`)

@@ -37,6 +37,6 @@ applyTo: "**/*.tsx,**/*.ts"
 **ALWAYS prefix npm commands with `cd` into the project directory — background terminals start at workspace root.**
 
 ```bash
-cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run build    # Must succeed — no TypeScript errors
-cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run lint     # If configured
+cd <PLAYGROUND_ROOT> && npm run build    # Must succeed — no TypeScript errors
+cd <PLAYGROUND_ROOT> && npm run lint     # If configured
 ```

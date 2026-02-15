@@ -29,7 +29,7 @@ Scopes: `editor`, `toolbar`, `output`, `ast`, `pipeline`, `icl`, `ui`, `deploy`,
 
 ## Procedure
 
-1. **`cd` into the repo**: `cd /home/opeworld/Documents/RobustBrains/icl-playground`
+1. **`cd` into the repo**: `cd <PLAYGROUND_ROOT>`
 2. Ensure on correct branch
 3. `npm run build` must pass
 4. Stage and commit

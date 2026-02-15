@@ -16,10 +16,10 @@ Rigid workflow for executing any ROADMAP.md phase. Follow exactly.
 
 ## Directory Rule (CRITICAL)
 
-**Every terminal command MUST be prefixed with `cd /home/opeworld/Documents/RobustBrains/icl-playground &&`.**
-Background terminals start at the workspace root (`/home/opeworld/Documents/RobustBrains/`), NOT in the project directory. Running bare `npm run dev` or `npm run build` will fail with ENOENT.
+**Every terminal command MUST be prefixed with `cd <PLAYGROUND_ROOT> &&`.**
+Background terminals start at the workspace root, NOT in the project directory. Running bare `npm run dev` or `npm run build` will fail with ENOENT.
 
-Correct: `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run build 2>&1`
+Correct: `cd <PLAYGROUND_ROOT> && npm run build 2>&1`
 Wrong: `npm run build 2>&1`
 
 ## Implementation Loop
@@ -28,8 +28,8 @@ For each batch:
 
 1. **Announce** — Tell user what this batch covers
 2. **Implement** — Write the code
-3. **Build** — `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run build` (must pass — no TypeScript errors)
-4. **Dev check** — `cd /home/opeworld/Documents/RobustBrains/icl-playground && npm run dev` starts without errors
+3. **Build** — `cd <PLAYGROUND_ROOT> && npm run build` (must pass — no TypeScript errors)
+4. **Dev check** — `cd <PLAYGROUND_ROOT> && npm run dev` starts without errors
 5. **Report** — Show results, ask user to type "continue" for next batch
 
 ## After All Batches Complete
@@ -38,7 +38,7 @@ For each batch:
 2. **Update ROADMAP.md** — Check off all completed items with `[x]`
 3. **Git commit & push** — ALWAYS `cd` into the repo directory first:
    ```bash
-   cd /home/opeworld/Documents/RobustBrains/icl-playground
+   cd <PLAYGROUND_ROOT>
    git add -A && git commit -m "feat(scope): Phase X.Y — description"
    git push
    ```
